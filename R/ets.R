@@ -828,7 +828,7 @@ etsmodel <- function(
 
   #  } else if(solver=="optim_c"){
 
-  env <- etsTargetFunctionInit(
+  env <- etsTargetFunInit(
     par = par,
     y = y,
     nstate = nstate,
@@ -968,7 +968,7 @@ etsmodel <- function(
   ))
 }
 
-etsTargetFunctionInit <- function(
+etsTargetFunInit <- function(
   par,
   y,
   nstate,
@@ -1076,8 +1076,7 @@ etsTargetFunctionInit <- function(
 
   env <- new.env()
 
-  res <- .Call(
-    "etsTargetFunctionInit",
+  res <- etsTargetFunctionInit(
     y = y,
     nstate = nstate,
     errortype = switch(errortype, "A" = 1, "M" = 2),
@@ -1102,8 +1101,7 @@ etsTargetFunctionInit <- function(
     beta,
     gamma,
     phi,
-    env,
-    PACKAGE = "forecast"
+    env
   )
   res
 }
@@ -1502,7 +1500,7 @@ pegelsresid.C <- function(
 
   amse <- numeric(nmse)
 
-  Cout <- .C(
+  Cout <- .Call(
     "etscalc",
     as.double(y),
     as.integer(n),
@@ -1518,8 +1516,7 @@ pegelsresid.C <- function(
     as.double(e),
     as.double(lik),
     as.double(amse),
-    as.integer(nmse),
-    PACKAGE = "forecast"
+    as.integer(nmse)
   )
   if (!is.na(Cout[[13]])) {
     if (abs(Cout[[13]] + 99999) < 1e-7) {
@@ -1690,7 +1687,7 @@ hfitted.ets <- function(object, h = 1, ...) {
   n <- length(object$x)
   out <- rep(NA_real_, n)
   for (i in seq_len(n - h + 1)) {
-    out[i + h - 1] <- .C(
+    out[i + h - 1] <- .Call(
       "etsforecast",
       as.double(object$states[i, ]),
       as.integer(object$m),
@@ -1698,8 +1695,7 @@ hfitted.ets <- function(object, h = 1, ...) {
       as.integer(switch(object$components[3], "N" = 0, "A" = 1, "M" = 2)),
       as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
       as.integer(h),
-      as.double(numeric(h)),
-      PACKAGE = "forecast"
+      as.double(numeric(h))
     )[[7]][h]
   }
   out

@@ -66,20 +66,16 @@ makeTBATSFMatrix <- function(
     last.pos <- 0
     for (i in seq_along(k.vector)) {
       if (seasonal.periods[i] != 2) {
-        C <- .Call(
-          "makeCIMatrix",
+        C <- makeCIMatrix(
           k_s = as.integer(k.vector[i]),
-          m_s = as.double(seasonal.periods[i]),
-          PACKAGE = "forecast"
+          m_s = as.double(seasonal.periods[i])
         )
       } else {
         C <- matrix(0, 1, 1)
       }
-      S <- .Call(
-        "makeSIMatrix",
+      S <- makeSIMatrix(
         k_s = as.integer(k.vector[i]),
-        m_s = as.double(seasonal.periods[i]),
-        PACKAGE = "forecast"
+        m_s = as.double(seasonal.periods[i])
       )
 
       # C <- matrix(0,k.vector[i],k.vector[i])
@@ -93,12 +89,10 @@ makeTBATSFMatrix <- function(
       # }
       # print(C)
       # print(S)
-      Ai <- .Call(
-        "makeAIMatrix",
+      Ai <- makeAIMatrix(
         C_s = C,
         S_s = S,
-        k_s = as.integer(k.vector[i]),
-        PACKAGE = "forecast"
+        k_s = as.integer(k.vector[i])
       )
       A[
         (last.pos + 1):(last.pos + (2 * k.vector[i])),

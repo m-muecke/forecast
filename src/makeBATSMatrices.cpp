@@ -1,9 +1,9 @@
-#include "calcBATS.h"
+#include <RcppArmadillo.h>
 
 using namespace Rcpp ;
 
+// [[Rcpp::export]]
 SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s) {
-	BEGIN_RCPP
 	double *smallPhi, *arCoefs, *maCoefs;
 	int *seasonalPeriods;
 	int adjustPhi = 0;
@@ -81,14 +81,11 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 			Named("w") = w,
 			Named("w.transpose") = wTranspose
 			);
-
-	END_RCPP
 }
 
 
+// [[Rcpp::export]]
 SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s) {
-	BEGIN_RCPP
-
 	double *gammaVector;
 	int *seasonalPeriods, *p, *q;
 	int numCols, gammaLength = 0;
@@ -168,8 +165,6 @@ SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasona
 				Named("gamma.bold.matrix") = R_NilValue
 			);
 	}
-
-	END_RCPP
 }
 
 /*

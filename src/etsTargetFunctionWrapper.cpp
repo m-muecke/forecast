@@ -16,15 +16,14 @@
 // to this object with name "ets.xptr"
 // to the environment submitted as p_rho
 //
-RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
+
+// [[Rcpp::export]]
+SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
 		SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper,
 		SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m,
 		SEXP p_optAlpha, SEXP p_optBeta, SEXP p_optGamma, SEXP p_optPhi,
 		SEXP p_givenAlpha, SEXP p_givenBeta, SEXP p_givenGamma, SEXP p_givenPhi,
 		SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi, SEXP p_rho) {
-
-	BEGIN_RCPP;
-
 	EtsTargetFunction* sp = new EtsTargetFunction();
 
 	std::vector<double> y = Rcpp::as< std::vector<double> >(p_y);
@@ -70,8 +69,6 @@ RcppExport SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype,
 	e["ets.xptr"] = Rcpp::XPtr<EtsTargetFunction>( sp, true );
 
 	return Rcpp::wrap(e);
-
-	END_RCPP;
 }
 
 // RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)

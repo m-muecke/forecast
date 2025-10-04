@@ -937,14 +937,12 @@ tbats.components <- function(x) {
   }
   # Compute matrices
   tau <- ifelse(!is.null(x$k.vector), 2 * sum(x$k.vector), 0)
-  w <- .Call(
-    "makeTBATSWMatrix",
+  w <- makeTBATSWMatrix(
     smallPhi_s = x$damping.parameter,
     kVector_s = as.integer(x$k.vector),
     arCoefs_s = x$ar.coefficients,
     maCoefs_s = x$ma.coefficients,
-    tau_s = as.integer(tau),
-    PACKAGE = "forecast"
+    tau_s = as.integer(tau)
   )
 
   out <- cbind(observed = c(y), level = x$x[1, ])
