@@ -98,6 +98,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// etsNelderMead
+SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol, SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_trace, SEXP p_maxit);
+RcppExport SEXP _forecast_etsNelderMead(SEXP p_varSEXP, SEXP p_envSEXP, SEXP p_abstolSEXP, SEXP p_intolSEXP, SEXP p_alphaSEXP, SEXP p_betaSEXP, SEXP p_gammaSEXP, SEXP p_traceSEXP, SEXP p_maxitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type p_var(p_varSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_env(p_envSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_abstol(p_abstolSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_intol(p_intolSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_alpha(p_alphaSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_beta(p_betaSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_gamma(p_gammaSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_trace(p_traceSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type p_maxit(p_maxitSEXP);
+    rcpp_result_gen = Rcpp::wrap(etsNelderMead(p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit));
+    return rcpp_result_gen;
+END_RCPP
+}
 // makeBATSWMatrix
 SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s);
 RcppExport SEXP _forecast_makeBATSWMatrix(SEXP smallPhi_sSEXP, SEXP sPeriods_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP) {
@@ -262,7 +281,6 @@ END_RCPP
 
 RcppExport SEXP etscalc(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 RcppExport SEXP etsforecast(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-RcppExport SEXP etsNelderMead(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 RcppExport SEXP etssimulate(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
@@ -270,6 +288,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_forecast_calcBATSFaster", (DL_FUNC) &_forecast_calcBATSFaster, 13},
     {"_forecast_calcWTilda", (DL_FUNC) &_forecast_calcWTilda, 2},
     {"_forecast_etsTargetFunctionInit", (DL_FUNC) &_forecast_etsTargetFunctionInit, 25},
+    {"_forecast_etsNelderMead", (DL_FUNC) &_forecast_etsNelderMead, 9},
     {"_forecast_makeBATSWMatrix", (DL_FUNC) &_forecast_makeBATSWMatrix, 4},
     {"_forecast_makeBATSGMatrix", (DL_FUNC) &_forecast_makeBATSGMatrix, 6},
     {"_forecast_makeTBATSWMatrix", (DL_FUNC) &_forecast_makeTBATSWMatrix, 5},
@@ -281,10 +300,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_forecast_updateGMatrix", (DL_FUNC) &_forecast_updateGMatrix, 6},
     {"_forecast_updateTBATSGammaBold", (DL_FUNC) &_forecast_updateTBATSGammaBold, 4},
     {"_forecast_updateTBATSGMatrix", (DL_FUNC) &_forecast_updateTBATSGMatrix, 4},
-    {"etscalc",       (DL_FUNC) &etscalc,       15},
-    {"etsforecast",   (DL_FUNC) &etsforecast,    7},
-    {"etsNelderMead", (DL_FUNC) &etsNelderMead,  9},
-    {"etssimulate",   (DL_FUNC) &etssimulate,   12},
+    {"etscalc",     (DL_FUNC) &etscalc,     15},
+    {"etsforecast", (DL_FUNC) &etsforecast,  7},
+    {"etssimulate", (DL_FUNC) &etssimulate, 12},
     {NULL, NULL, 0}
 };
 

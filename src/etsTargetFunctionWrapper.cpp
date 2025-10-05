@@ -16,7 +16,6 @@
 // to this object with name "ets.xptr"
 // to the environment submitted as p_rho
 //
-
 // [[Rcpp::export]]
 SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
 		SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper,
@@ -135,7 +134,8 @@ double targetFunctionEtsNelderMead(int n, double *par, void *ex)
 
 }
 
-RcppExport SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
+// [[Rcpp::export]]
+SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
 		SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma,
 		SEXP p_trace, SEXP p_maxit)
 {

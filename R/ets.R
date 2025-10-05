@@ -847,8 +847,7 @@ etsmodel <- function(
     pnames2 = names(par.noopt)
   )
 
-  fred <- .Call(
-    "etsNelderMead",
+  fred <- etsNelderMead(
     par,
     env,
     -Inf,
@@ -857,8 +856,7 @@ etsmodel <- function(
     0.5,
     2.0,
     trace,
-    maxit,
-    PACKAGE = "forecast"
+    maxit
   )
 
   fit.par <- fred$par

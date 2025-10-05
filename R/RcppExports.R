@@ -17,6 +17,10 @@ etsTargetFunctionInit <- function(p_y, p_nstate, p_errortype, p_trendtype, p_sea
     .Call(`_forecast_etsTargetFunctionInit`, p_y, p_nstate, p_errortype, p_trendtype, p_seasontype, p_damped, p_lower, p_upper, p_opt_crit, p_nmse, p_bounds, p_m, p_optAlpha, p_optBeta, p_optGamma, p_optPhi, p_givenAlpha, p_givenBeta, p_givenGamma, p_givenPhi, p_alpha, p_beta, p_gamma, p_phi, p_rho)
 }
 
+etsNelderMead <- function(p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit) {
+    .Call(`_forecast_etsNelderMead`, p_var, p_env, p_abstol, p_intol, p_alpha, p_beta, p_gamma, p_trace, p_maxit)
+}
+
 makeBATSWMatrix <- function(smallPhi_s, sPeriods_s, arCoefs_s, maCoefs_s) {
     .Call(`_forecast_makeBATSWMatrix`, smallPhi_s, sPeriods_s, arCoefs_s, maCoefs_s)
 }
