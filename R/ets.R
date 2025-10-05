@@ -1074,19 +1074,19 @@ etsTargetFunInit <- function(
 
   env <- new.env()
 
-  res <- etsTargetFunInit(
-    y = y,
-    nstate = nstate,
-    errortype = switch(errortype, "A" = 1, "M" = 2),
-    trendtype = switch(trendtype, "N" = 0, "A" = 1, "M" = 2),
-    seasontype = switch(seasontype, "N" = 0, "A" = 1, "M" = 2),
-    damped = damped,
-    lowerb = lowerb,
-    upperb = upperb,
-    opt.crit = opt.crit,
-    nmse = as.integer(nmse),
-    bounds = bounds,
-    m = m,
+  res <- etsTargetFunctionInit(
+    p_y = y,
+    p_nstate = nstate,
+    p_errortype = switch(errortype, "A" = 1, "M" = 2),
+    p_trendtype = switch(trendtype, "N" = 0, "A" = 1, "M" = 2),
+    p_seasontype = switch(seasontype, "N" = 0, "A" = 1, "M" = 2),
+    p_damped = damped,
+    p_lower = lowerb,
+    p_upper = upperb,
+    p_opt_crit = opt.crit,
+    p_nmse = as.integer(nmse),
+    p_bounds = bounds,
+    p_m = m,
     optAlpha,
     optBeta,
     optGamma,
