@@ -167,5 +167,4 @@ SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
 			Rcpp::Named("par") = opar,
 			Rcpp::Named("fail") = fail,
 			Rcpp::Named("fncount") = fncount);
-
 }

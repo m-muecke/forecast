@@ -279,8 +279,8 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport SEXP etscalc(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
-RcppExport SEXP etsforecast(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+RcppExport void etscalc(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+RcppExport void etsforecast(void *, void *, void *, void *, void *, void *, void *);
 RcppExport SEXP etssimulate(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
