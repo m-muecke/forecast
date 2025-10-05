@@ -281,7 +281,7 @@ END_RCPP
 
 RcppExport void etscalc(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 RcppExport void etsforecast(void *, void *, void *, void *, void *, void *, void *);
-RcppExport SEXP etssimulate(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+RcppExport void etssimulate(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_forecast_calcBATS", (DL_FUNC) &_forecast_calcBATS, 7},

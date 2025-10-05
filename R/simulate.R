@@ -99,7 +99,7 @@ simulate.ets <- function(
     e <- pmax(-1, e)
   }
   tmp <- ts(
-    .Call(
+    .C(
       "etssimulate",
       as.double(initstate),
       as.integer(object$m),
@@ -112,7 +112,8 @@ simulate.ets <- function(
       as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
       as.integer(nsim),
       as.double(numeric(nsim)),
-      as.double(e)
+      as.double(e),
+      PACKAGE = "forecast"
     )[[11]],
     frequency = object$m,
     start = ifelse(
