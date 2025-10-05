@@ -209,7 +209,7 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
   for (i in 1:npaths) {
     y.paths[i, ] <- simulate.ets(obj, h, future = TRUE, bootstrap = bootstrap)
   }
-  y.f <- .Call(
+  y.f <- .C(
     "etsforecast",
     as.double(obj$states[length(obj$x) + 1, ]),
     as.integer(obj$m),
@@ -217,7 +217,8 @@ pegelsfcast.C <- function(h, obj, npaths, level, bootstrap) {
     as.integer(switch(obj$components[3], "N" = 0, "A" = 1, "M" = 2)),
     as.double(ifelse(obj$components[4] == "FALSE", 1, obj$par["phi"])),
     as.integer(h),
-    as.double(numeric(h))
+    as.double(numeric(h)),
+    PACKAGE = "forecast"
   )[[7]]
   if (abs(y.f[1] + 99999) < 1e-7) {
     stop("Problem with multiplicative damped trend")

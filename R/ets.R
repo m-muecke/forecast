@@ -1498,7 +1498,7 @@ pegelsresid.C <- function(
 
   amse <- numeric(nmse)
 
-  Cout <- .Call(
+  Cout <- .C(
     "etscalc",
     as.double(y),
     as.integer(n),
@@ -1514,7 +1514,8 @@ pegelsresid.C <- function(
     as.double(e),
     as.double(lik),
     as.double(amse),
-    as.integer(nmse)
+    as.integer(nmse),
+    PACKAGE = "forecast"
   )
   if (!is.na(Cout[[13]])) {
     if (abs(Cout[[13]] + 99999) < 1e-7) {
@@ -1685,7 +1686,7 @@ hfitted.ets <- function(object, h = 1, ...) {
   n <- length(object$x)
   out <- rep(NA_real_, n)
   for (i in seq_len(n - h + 1)) {
-    out[i + h - 1] <- .Call(
+    out[i + h - 1] <- .C(
       "etsforecast",
       as.double(object$states[i, ]),
       as.integer(object$m),
@@ -1693,7 +1694,8 @@ hfitted.ets <- function(object, h = 1, ...) {
       as.integer(switch(object$components[3], "N" = 0, "A" = 1, "M" = 2)),
       as.double(ifelse(object$components[4] == "FALSE", 1, object$par["phi"])),
       as.integer(h),
-      as.double(numeric(h))
+      as.double(numeric(h)),
+      PACKAGE = "forecast"
     )[[7]][h]
   }
   out
