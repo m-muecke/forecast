@@ -64,7 +64,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // etsTargetFunctionInit
-SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype, SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper, SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m, SEXP p_optAlpha, SEXP p_optBeta, SEXP p_optGamma, SEXP p_optPhi, SEXP p_givenAlpha, SEXP p_givenBeta, SEXP p_givenGamma, SEXP p_givenPhi, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi, SEXP p_rho);
+Rcpp::Environment etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype, SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper, SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m, SEXP p_optAlpha, SEXP p_optBeta, SEXP p_optGamma, SEXP p_optPhi, SEXP p_givenAlpha, SEXP p_givenBeta, SEXP p_givenGamma, SEXP p_givenPhi, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_phi, SEXP p_rho);
 RcppExport SEXP _forecast_etsTargetFunctionInit(SEXP p_ySEXP, SEXP p_nstateSEXP, SEXP p_errortypeSEXP, SEXP p_trendtypeSEXP, SEXP p_seasontypeSEXP, SEXP p_dampedSEXP, SEXP p_lowerSEXP, SEXP p_upperSEXP, SEXP p_opt_critSEXP, SEXP p_nmseSEXP, SEXP p_boundsSEXP, SEXP p_mSEXP, SEXP p_optAlphaSEXP, SEXP p_optBetaSEXP, SEXP p_optGammaSEXP, SEXP p_optPhiSEXP, SEXP p_givenAlphaSEXP, SEXP p_givenBetaSEXP, SEXP p_givenGammaSEXP, SEXP p_givenPhiSEXP, SEXP p_alphaSEXP, SEXP p_betaSEXP, SEXP p_gammaSEXP, SEXP p_phiSEXP, SEXP p_rhoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -99,7 +99,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // etsNelderMead
-SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol, SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_trace, SEXP p_maxit);
+Rcpp::List etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol, SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma, SEXP p_trace, SEXP p_maxit);
 RcppExport SEXP _forecast_etsNelderMead(SEXP p_varSEXP, SEXP p_envSEXP, SEXP p_abstolSEXP, SEXP p_intolSEXP, SEXP p_alphaSEXP, SEXP p_betaSEXP, SEXP p_gammaSEXP, SEXP p_traceSEXP, SEXP p_maxitSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -118,7 +118,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeBATSWMatrix
-SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s);
+List makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s);
 RcppExport SEXP _forecast_makeBATSWMatrix(SEXP smallPhi_sSEXP, SEXP sPeriods_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -132,7 +132,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeBATSGMatrix
-SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s);
+List makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s);
 RcppExport SEXP _forecast_makeBATSGMatrix(SEXP alpha_sSEXP, SEXP beta_sSEXP, SEXP gammaVector_sSEXP, SEXP seasonalPeriods_sSEXP, SEXP p_sSEXP, SEXP q_sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -148,7 +148,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeTBATSWMatrix
-SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s);
+List makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s);
 RcppExport SEXP _forecast_makeTBATSWMatrix(SEXP smallPhi_sSEXP, SEXP kVector_sSEXP, SEXP arCoefs_sSEXP, SEXP maCoefs_sSEXP, SEXP tau_sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -163,7 +163,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeCIMatrix
-SEXP makeCIMatrix(SEXP k_s, SEXP m_s);
+NumericMatrix makeCIMatrix(SEXP k_s, SEXP m_s);
 RcppExport SEXP _forecast_makeCIMatrix(SEXP k_sSEXP, SEXP m_sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -175,7 +175,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeSIMatrix
-SEXP makeSIMatrix(SEXP k_s, SEXP m_s);
+NumericMatrix makeSIMatrix(SEXP k_s, SEXP m_s);
 RcppExport SEXP _forecast_makeSIMatrix(SEXP k_sSEXP, SEXP m_sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

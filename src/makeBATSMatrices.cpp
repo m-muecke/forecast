@@ -3,7 +3,7 @@
 using namespace Rcpp ;
 
 // [[Rcpp::export]]
-SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s) {
+List makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCoefs_s) {
 	double *smallPhi, *arCoefs, *maCoefs;
 	int *seasonalPeriods;
 	int adjustPhi = 0;
@@ -85,7 +85,7 @@ SEXP makeBATSWMatrix(SEXP smallPhi_s, SEXP sPeriods_s, SEXP arCoefs_s, SEXP maCo
 
 
 // [[Rcpp::export]]
-SEXP makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s) {
+List makeBATSGMatrix(SEXP alpha_s, SEXP beta_s, SEXP gammaVector_s, SEXP seasonalPeriods_s, SEXP p_s, SEXP q_s) {
 	double *gammaVector;
 	int *seasonalPeriods, *p, *q;
 	int numCols, gammaLength = 0;

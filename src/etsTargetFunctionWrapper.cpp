@@ -17,7 +17,7 @@
 // to the environment submitted as p_rho
 //
 // [[Rcpp::export]]
-SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
+Rcpp::Environment etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_trendtype,
 		SEXP p_seasontype, SEXP p_damped, SEXP p_lower, SEXP p_upper,
 		SEXP p_opt_crit, SEXP p_nmse, SEXP p_bounds, SEXP p_m,
 		SEXP p_optAlpha, SEXP p_optBeta, SEXP p_optGamma, SEXP p_optPhi,
@@ -66,8 +66,7 @@ SEXP etsTargetFunctionInit(SEXP p_y, SEXP p_nstate, SEXP p_errortype, SEXP p_tre
 
 	Rcpp::Environment e(p_rho);
 	e["ets.xptr"] = Rcpp::XPtr<EtsTargetFunction>( sp, true );
-
-	return Rcpp::wrap(e);
+	return e;
 }
 
 // RcppExport double targetFunctionRmalschains(SEXP p_par, SEXP p_env)
@@ -135,7 +134,7 @@ double targetFunctionEtsNelderMead(int n, double *par, void *ex)
 }
 
 // [[Rcpp::export]]
-SEXP etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
+Rcpp::List etsNelderMead(SEXP p_var, SEXP p_env, SEXP p_abstol,
 		SEXP p_intol, SEXP p_alpha, SEXP p_beta, SEXP p_gamma,
 		SEXP p_trace, SEXP p_maxit)
 {

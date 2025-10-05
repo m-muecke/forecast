@@ -3,7 +3,7 @@
 using namespace Rcpp ;
 
 // [[Rcpp::export]]
-SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s) {
+List makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCoefs_s, SEXP tau_s) {
 	double *smallPhi, *arCoefs, *maCoefs;
 	int *kVector, *tau;
 	int adjustPhi = 0;
@@ -80,7 +80,7 @@ SEXP makeTBATSWMatrix(SEXP smallPhi_s, SEXP kVector_s, SEXP arCoefs_s, SEXP maCo
 }
 
 // [[Rcpp::export]]
-SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
+NumericMatrix makeCIMatrix(SEXP k_s, SEXP m_s) {
   double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
@@ -92,11 +92,11 @@ SEXP makeCIMatrix(SEXP k_s, SEXP m_s) {
 		lambda = (2 * pi * j) / *m;
 		C((j-1),(j-1)) = std::cos(lambda);
 	}
-	return wrap(C);
+	return C;
 }
 
 // [[Rcpp::export]]
-SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
+NumericMatrix makeSIMatrix(SEXP k_s, SEXP m_s) {
   double pi = arma::datum::pi;
 	double lambda, *m;
 	int *k;
@@ -108,7 +108,7 @@ SEXP makeSIMatrix(SEXP k_s, SEXP m_s) {
 		lambda = (2 * pi * j) / *m;
 		S((j-1),(j-1)) = std::sin(lambda);
 	}
-	return wrap(S);
+	return S;
 }
 
 // [[Rcpp::export]]
@@ -128,5 +128,4 @@ SEXP makeAIMatrix(SEXP C_s, SEXP S_s, SEXP k_s) {
 	A.submat(*k,*k, ((*k *2) -1), ((*k *2) -1)) = C;
 
 	return wrap(A);
-
 }

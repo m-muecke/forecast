@@ -1074,7 +1074,7 @@ etsTargetFunInit <- function(
 
   env <- new.env()
 
-  res <- etsTargetFunctionInit(
+  res <- etsTargetFunInit(
     y = y,
     nstate = nstate,
     errortype = switch(errortype, "A" = 1, "M" = 2),
