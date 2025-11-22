@@ -1,19 +1,39 @@
-# Forecasting using Holt-Winters objects
+# Theta method forecasts.
 
-Returns forecasts and other information for univariate Holt-Winters time
-series models.
+Returns forecasts and prediction intervals for a theta method forecast.
+`thetaf()` is a convenience function that combines
+[`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
+and `forecast.theta_model()`. The theta method of Assimakopoulos and
+Nikolopoulos (2000) is equivalent to simple exponential smoothing with
+drift (Hyndman and Billah, 2003). The series is tested for seasonality
+using the test outlined in A&N. If deemed seasonal, the series is
+seasonally adjusted using a classical multiplicative decomposition
+before applying the theta method. The resulting forecasts are then
+reseasonalized. Prediction intervals are computed using the underlying
+state space model.
 
 ## Usage
 
 ``` r
-# S3 method for class 'HoltWinters'
+# S3 method for class 'theta_model'
 forecast(
   object,
-  h = if (frequency(object$x) > 1) 2 * frequency(object$x) else 10,
+  h = if (frequency(object$y) > 1) 2 * frequency(object$y) else 10,
+  level = c(80, 95),
+  fan = FALSE,
+  lambda = object$lambda,
+  biasadj = NULL,
+  ...
+)
+
+thetaf(
+  y,
+  h = if (frequency(y) > 1) 2 * frequency(y) else 10,
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
   biasadj = FALSE,
+  x = y,
   ...
 )
 ```
@@ -22,8 +42,8 @@ forecast(
 
 - object:
 
-  An object of class `HoltWinters`. Usually the result of a call to
-  [`stats::HoltWinters()`](https://rdrr.io/r/stats/HoltWinters.html).
+  An object of class `theta_model` created by
+  [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md).
 
 - h:
 
@@ -56,7 +76,15 @@ forecast(
 
 - ...:
 
-  Other arguments are ignored.
+  Other arguments passed to `forecast.ets`.
+
+- y:
+
+  a numeric vector or univariate time series of class `ts`
+
+- x:
+
+  Deprecated. Included for backwards compatibility.
 
 ## Value
 
@@ -64,14 +92,8 @@ An object of class `forecast`.
 
 ## Details
 
-This function calls
-[`stats::predict.HoltWinters()`](https://rdrr.io/r/stats/predict.HoltWinters.html)
-and constructs an object of class `forecast` from the results.
-
-It is included for completeness, but the
-[`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) is
-recommended for use instead of
-[stats::HoltWinters](https://rdrr.io/r/stats/HoltWinters.html).
+More general theta methods are available in the
+[forecTheta](https://CRAN.R-project.org/package=forecTheta) package.
 
 ## forecast class
 
@@ -121,10 +143,21 @@ forecasts and prediction intervals. The generic accessors functions
 `fitted.values` and `residuals` extract various useful features from the
 underlying model.
 
+## References
+
+Assimakopoulos, V. and Nikolopoulos, K. (2000). The theta model: a
+decomposition approach to forecasting. *International Journal of
+Forecasting* **16**, 521-530.
+
+Hyndman, R.J., and Billah, B. (2003) Unmasking the Theta method.
+*International J. Forecasting*, **19**, 287-290.
+
 ## See also
 
-[stats::predict.HoltWinters](https://rdrr.io/r/stats/predict.HoltWinters.html),
-[`stats::HoltWinters()`](https://rdrr.io/r/stats/HoltWinters.html).
+[`stats::arima()`](https://rdrr.io/r/stats/arima.html),
+[`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md),
+[`rwf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.rw_model.md),
+[`ses()`](https://pkg.robjhyndman.com/forecast/reference/ses.md)
 
 ## Author
 
@@ -133,7 +166,6 @@ Rob J Hyndman
 ## Examples
 
 ``` r
-fit <- HoltWinters(WWWusage, gamma = FALSE)
-plot(forecast(fit))
-
+nile_fit <- theta_model(Nile)
+forecast(nile_fit) |> autoplot()
 ```

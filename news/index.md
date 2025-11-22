@@ -3,6 +3,8 @@
 ## forecast (development version)
 
 - Added mean_model() and forecast.mean_model()
+- Added rw_model() and forecast.rw_model()
+- Added spline_model() and forecast.spline_model()
 - Bug fixes
 - Documentation improvements
 
@@ -112,7 +114,7 @@ CRAN release: 2021-06-01
   [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md),
   [`stlf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
   and
-  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md).
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md).
   The new defaults are based on extensive empirical testing.
 
 ## forecast 8.14

@@ -17,26 +17,10 @@ forecast(
   level = c(80, 95),
   fan = FALSE,
   lambda = NULL,
-  biasadj = NULL,
+  biasadj = FALSE,
   xreg = NULL,
   newxreg = NULL,
   allow.multiplicative.trend = FALSE,
-  ...
-)
-
-stlm(
-  y,
-  s.window = 7 + 4 * seq(6),
-  robust = FALSE,
-  method = c("ets", "arima"),
-  modelfunction = NULL,
-  model = NULL,
-  etsmodel = "ZZN",
-  lambda = NULL,
-  biasadj = FALSE,
-  xreg = NULL,
-  allow.multiplicative.trend = FALSE,
-  x = y,
   ...
 )
 
@@ -151,31 +135,19 @@ stlf(
   Either the character string `"periodic"` or the span (in lags) of the
   loess window for seasonal extraction.
 
+- t.window:
+
+  A number to control the smoothness of the trend. See
+  [`stats::stl()`](https://rdrr.io/r/stats/stl.html) for details.
+
 - robust:
 
   If `TRUE`, robust fitting will used in the loess procedure within
   [`stats::stl()`](https://rdrr.io/r/stats/stl.html).
 
-- modelfunction:
-
-  An alternative way of specifying the function for modelling the
-  seasonally adjusted series. If `modelfunction` is not `NULL`, then
-  `method` is ignored. Otherwise `method` is used to specify the time
-  series model to be used.
-
-- model:
-
-  Output from a previous call to `stlm`. If a `stlm` model is passed,
-  this same model is fitted to y without re-estimating any parameters.
-
 - x:
 
   Deprecated. Included for backwards compatibility.
-
-- t.window:
-
-  A number to control the smoothness of the trend. See
-  [`stats::stl()`](https://rdrr.io/r/stats/stl.html) for details.
 
 ## Value
 
@@ -191,21 +163,16 @@ intervals. The generic accessor functions `fitted.values` and
 
 ## Details
 
-`stlm` takes a time series `y`, applies an STL decomposition, and models
-the seasonally adjusted data using the model passed as `modelfunction`
-or specified using `method`. It returns an object that includes the
-original STL decomposition and a time series model fitted to the
-seasonally adjusted data. This object can be passed to the
-`forecast.stlm` for forecasting.
-
 `forecast.stlm` forecasts the seasonally adjusted data, then
 re-seasonalizes the results by adding back the last year of the
 estimated seasonal component.
 
-`stlf` combines `stlm` and `forecast.stlm`. It takes a `ts` argument,
-applies an STL decomposition, models the seasonally adjusted data,
-reseasonalizes, and returns the forecasts. However, it allows more
-general forecasting methods to be specified via `forecastfunction`.
+`stlf` combines
+[`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) and
+`forecast.stlm`. It takes a `ts` argument, applies an STL decomposition,
+models the seasonally adjusted data, reseasonalizes, and returns the
+forecasts. However, it allows more general forecasting methods to be
+specified via `forecastfunction`.
 
 `forecast.stl` is similar to `stlf` except that it takes the STL
 decomposition as the first argument, instead of the time series.
@@ -216,17 +183,6 @@ intervals from the seasonally adjusted series, which are then
 reseasonalized using the last year of the seasonal component. The
 uncertainty in the seasonal component is ignored.
 
-The time series model for the seasonally adjusted data can be specified
-in `stlm` using either `method` or `modelfunction`. The `method`
-argument provides a shorthand way of specifying `modelfunction` for a
-few special cases. More generally, `modelfunction` can be any function
-with first argument a `ts` object, that returns an object that can be
-passed to
-[`forecast()`](https://generics.r-lib.org/reference/forecast.html). For
-example, `forecastfunction = ar` uses the
-[`ar()`](https://rdrr.io/r/stats/ar.html) function for modelling the
-seasonally adjusted series.
-
 The forecasting method for the seasonally adjusted data can be specified
 in `stlf` and `forecast.stl` using either `method` or
 `forecastfunction`. The `method` argument provides a shorthand way of
@@ -235,7 +191,7 @@ specifying `forecastfunction` for a few special cases. More generally,
 object, and other `h` and `level`, which returns an object of class
 [`forecast()`](https://generics.r-lib.org/reference/forecast.html). For
 example, `forecastfunction = thetaf` uses the
-[`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/thetaf.md)
+[`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
 function for forecasting the seasonally adjusted series.
 
 ## See also
