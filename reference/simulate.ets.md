@@ -60,6 +60,7 @@ simulate(
   future = TRUE,
   bootstrap = FALSE,
   innov = NULL,
+  lambda = object$lambda,
   ...
 )
 
@@ -117,7 +118,8 @@ simulate(
 
 - object:
 
-  An object of class `ets`, `Arima`, `ar` or `nnetar`.
+  An object representing a fitted time series model. For example, it may
+  be of class `ets`, `Arima`, `ar`, `nnetar`, etc.
 
 - nsim:
 
