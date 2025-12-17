@@ -25,7 +25,6 @@ ets(
   restrict = TRUE,
   allow.multiplicative.trend = FALSE,
   use.initial.values = FALSE,
-  na.action = c("na.contiguous", "na.interp", "na.fail"),
   ...
 )
 ```
@@ -144,12 +143,6 @@ ets(
   If `TRUE` and `model` is of class `"ets"`, then the initial values in
   the model are also not re-estimated.
 
-- na.action:
-
-  A function which indicates what should happen when the data contains
-  NA values. By default, the largest contiguous portion of the
-  time-series will be used.
-
 - ...:
 
   Other arguments are ignored.
@@ -183,7 +176,7 @@ Statistical Mathematics*, **60**(2), 407–426.
 
 Hyndman, R.J., Koehler, A.B., Ord, J.K., and Snyder, R.D. (2008)
 *Forecasting with exponential smoothing: the state space approach*,
-Springer-Verlag. <http://www.exponentialsmoothing.net>.
+Springer-Verlag. <https://robjhyndman.com/expsmooth/>.
 
 ## See also
 
