@@ -15,7 +15,7 @@
 #' start at the value of the first observation.
 #'
 #' @inheritParams forecast.Arima
-#' @param object An object representing a fitted time series model. For example, 
+#' @param object An object representing a fitted time series model. For example,
 #' it may be of class `ets`, `Arima`, `ar`, `nnetar`, etc.
 #' @param nsim Number of periods for the simulated series. Ignored if either
 #' `xreg` or `innov` are not `NULL`. Otherwise the default is
@@ -708,7 +708,7 @@ simulate.fracdiff <- function(
   ...
 ) {
   x <- getResponse(object)
-  if(!is.null(lambda)) {
+  if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
   }
   if (is.null(x)) {
@@ -864,14 +864,14 @@ simulate.nnetar <- function(
   flag <- rev(tail(xx, n = maxlag))
   ## Simulate by iteratively forecasting and adding innovation
   path <- numeric(nsim)
-  for (i in 1:nsim) {
+  for (i in seq_len(nsim)) {
     newdata <- c(flag[lags], xreg[i, ])
     if (anyNA(newdata)) {
       stop(
         "I can't simulate when there are missing values near the end of the series."
       )
     }
-    path[i] <- mean(sapply(object$model, predict, newdata = newdata)) + e[i]
+    path[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata)) + e[i]
     flag <- c(path[i], flag[-maxlag])
   }
   ## Re-scale simulated points

@@ -315,10 +315,14 @@ forecast.lm <- function(
     # Search for time series variables
     tsvar <- match(c("trend", "season"), reqvars, 0L)
     # Check if required variables are functions
-    fnvar <- sapply(reqvars, function(x) {
-      !(is.symbol(parse(text = x)[[1]]) ||
-        typeof(eval(parse(text = x)[[1]][[1]])) != "closure")
-    })
+    fnvar <- vapply(
+      reqvars,
+      function(x) {
+        !(is.symbol(parse(text = x)[[1]]) ||
+          typeof(eval(parse(text = x)[[1]][[1]])) != "closure")
+      },
+      logical(1)
+    )
     if (!is.data.frame(newdata)) {
       newdata <- datamat(newdata)
       colnames(newdata)[1] <- if (sum(tsvar > 0)) {
