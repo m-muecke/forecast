@@ -732,15 +732,10 @@ as.data.frame.mforecast <- function(x, ...) {
   series <- names(tmp)
   times <- rownames(tmp[[1]])
   h <- NROW(tmp[[1]])
-  output <- cbind(Time = times, Series = rep(series[1], h), tmp[[1]])
-  if (length(tmp) > 1) {
-    for (i in 2:length(tmp)) {
-      output <- rbind(
-        output,
-        cbind(Time = times, Series = rep(series[i], h), tmp[[i]])
-      )
-    }
-  }
+  output_list <- lapply(seq_along(tmp), function(i) {
+    cbind(Time = times, Series = rep(series[i], h), tmp[[i]])
+  })
+  output <- do.call(rbind, output_list)
   rownames(output) <- NULL
   output
 }

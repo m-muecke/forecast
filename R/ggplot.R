@@ -1357,27 +1357,28 @@ gglagplot <- function(
 
   # Prepare data for plotting
   n <- NROW(x)
-  data <- data.frame()
+  xname <- deparse(match.call()$x)
+  data_list <- vector("list", NCOL(x) * length(set.lags))
+  idx <- 1L
   for (i in seq_len(NCOL(x))) {
+    sname <- colnames(x)[i]
+    if (is.null(sname)) {
+      sname <- xname
+    }
     for (lagi in set.lags) {
-      sname <- colnames(x)[i]
-      if (is.null(sname)) {
-        sname <- deparse(match.call()$x)
-      }
-      data <- rbind(
-        data,
-        data.frame(
-          lagnum = 1:(n - lagi),
-          freqcur = if (seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
-          orig = x[(lagi + 1):n, i],
-          lagged = x[1:(n - lagi), i],
-          lagVal = rep(lagi, n - lagi),
-          series = factor(rep(sname, n - lagi)),
-          check.names = FALSE
-        )
+      data_list[[idx]] <- data.frame(
+        lagnum = 1:(n - lagi),
+        freqcur = if (seasonal) linecol[(lagi + 1):n] else (lagi + 1):n,
+        orig = x[(lagi + 1):n, i],
+        lagged = x[1:(n - lagi), i],
+        lagVal = rep(lagi, n - lagi),
+        series = factor(rep(sname, n - lagi)),
+        check.names = FALSE
       )
+      idx <- idx + 1L
     }
   }
+  data <- do.call(rbind, data_list)
   if (!continuous) {
     data$freqcur <- factor(data$freqcur)
   }
@@ -1504,25 +1505,26 @@ gglagchull <- function(
 
   # Prepare data for plotting
   n <- NROW(x)
-  data <- data.frame()
+  xname <- deparse1(substitute(x))
+  data_list <- vector("list", NCOL(x) * length(set.lags))
+  idx <- 1L
   for (i in seq_len(NCOL(x))) {
+    sname <- colnames(x)[i]
+    if (is.null(sname)) {
+      sname <- xname
+    }
     for (lag in set.lags) {
-      sname <- colnames(x)[i]
-      if (is.null(sname)) {
-        sname <- deparse1(substitute(x))
-      }
-      data <- rbind(
-        data,
-        data.frame(
-          orig = x[(lag + 1):n, i],
-          lagged = x[1:(n - lag), i],
-          lag = rep(lag, n - lag),
-          series = rep(sname, n - lag),
-          check.names = FALSE
-        )[grDevices::chull(x[(lag + 1):n, i], x[1:(n - lag), i]), ]
-      )
+      data_list[[idx]] <- data.frame(
+        orig = x[(lag + 1):n, i],
+        lagged = x[1:(n - lag), i],
+        lag = rep(lag, n - lag),
+        series = rep(sname, n - lag),
+        check.names = FALSE
+      )[grDevices::chull(x[(lag + 1):n, i], x[1:(n - lag), i]), ]
+      idx <- idx + 1L
     }
   }
+  data <- do.call(rbind, data_list)
 
   # Initialise ggplot object
   p <- ggplot2::ggplot(

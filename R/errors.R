@@ -332,20 +332,18 @@ accuracy.mforecast <- function(
   D = NULL,
   ...
 ) {
-  out <- NULL
   nox <- missing(x)
-  i <- 1
-  for (fcast in object$forecast) {
+  out_list <- lapply(seq_along(object$forecast), function(i) {
+    fcast <- object$forecast[[i]]
     if (nox) {
       out1 <- accuracy(fcast, test = test, d = d, D = D, ...)
     } else {
       out1 <- accuracy(fcast, x = x[, i], test = test, d = d, D = D, ...)
     }
     rownames(out1) <- paste(fcast$series, rownames(out1))
-    out <- rbind(out, out1)
-    i <- i + 1
-  }
-  out
+    out1
+  })
+  do.call(rbind, out_list)
 }
 
 #' @rdname accuracy.forecast

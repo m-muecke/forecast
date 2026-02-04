@@ -193,22 +193,13 @@ bats <- function(
 
   if (use.parallel) {
     # Set up the control array
-    control.array <- NULL
-    for (box.cox in use.box.cox) {
-      for (trend in use.trend) {
-        for (damping in use.damped.trend) {
-          if (!trend && damping) {
-            next
-          }
-          control.line <- c(box.cox, trend, damping)
-          if (!is.null(control.array)) {
-            control.array <- rbind(control.array, control.line)
-          } else {
-            control.array <- control.line
-          }
-        }
-      }
-    }
+    control.array <- expand.grid(
+      box.cox = use.box.cox,
+      trend = use.trend,
+      damping = use.damped.trend
+    )
+    control.array <- control.array[control.array$trend | !control.array$damping, ]
+    control.array <- as.matrix(control.array)
     ## Fit the models
     if (is.null(num.cores)) {
       num.cores <- detectCores()
