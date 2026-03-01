@@ -75,8 +75,7 @@ baggedModel <- function(
 
   out$modelargs <- list(...)
 
-  fitted_boot <- lapply(out$models, fitted)
-  fitted_boot <- as.matrix(as.data.frame(fitted_boot))
+  fitted_boot <- do.call(cbind, lapply(out$models, fitted))
   out$fitted <- ts(rowMeans(fitted_boot))
   tsp(out$fitted) <- tsp(out$y)
   out$residuals <- out$y - out$fitted
@@ -154,8 +153,7 @@ forecast.baggedModel <- function(
     }
   })
 
-  forecasts_boot <- as.matrix(as.data.frame(forecasts_boot))
-  colnames(forecasts_boot) <- NULL
+  forecasts_boot <- do.call(cbind, forecasts_boot)
 
   if (!is.null(tspx)) {
     start.f <- tspx[2] + 1 / frequency(out$x)
