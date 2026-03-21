@@ -2,6 +2,17 @@
 
 ## forecast (development version)
 
+## forecast 9.0.2
+
+CRAN release: 2026-03-18
+
+- [`checkresiduals()`](https://pkg.robjhyndman.com/forecast/reference/checkresiduals.md)
+  correctly handles the `test` argument again
+  ([\#1100](https://github.com/robjhyndman/forecast/issues/1100))
+- [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
+  correctly accesses the `lambda` attribute on mstl matrix objects
+  ([\#1097](https://github.com/robjhyndman/forecast/issues/1097))
+
 ## forecast 9.0.1
 
 CRAN release: 2026-02-14
