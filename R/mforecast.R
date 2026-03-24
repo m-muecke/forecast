@@ -33,7 +33,7 @@ mlmsplit <- function(x, index = NULL) {
       ts(x, start = tspx[1], end = tspx[2], frequency = tspx[3])
     })
     class(x$data) <- "data.frame"
-    row.names(x$data) <- 1:max(vapply(x$data, NROW, integer(1)))
+    row.names(x$data) <- seq_len(max(vapply(x$data, NROW, integer(1))))
   }
 
   x$terms <- terms(x$model)

@@ -368,7 +368,7 @@ forecast.Arima <- function(
     #n <- length(x) - firstnonmiss + 1
     if (!is.null(xreg)) {
       xreg <- `colnames<-`(
-        cbind(drift = (1:h) + n, xreg),
+        cbind(drift = seq_len(h) + n, xreg),
         make.unique(c(
           "drift",
           if (is.null(colnames(xreg)) && !is.null(xreg)) {
@@ -379,7 +379,7 @@ forecast.Arima <- function(
         ))
       )
     } else {
-      xreg <- `colnames<-`(as.matrix((1:h) + n), "drift")
+      xreg <- `colnames<-`(as.matrix(seq_len(h) + n), "drift")
     }
   }
 

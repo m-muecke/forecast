@@ -64,7 +64,7 @@ na.interp <- function(
   freq <- frequency(x)
   tspx <- tsp(x)
   n <- length(x)
-  tt <- 1:n
+  tt <- seq_len(n)
   idx <- tt[!missng]
 
   if (linear) {
@@ -91,7 +91,7 @@ na.interp <- function(
     fit <- mstl(x, robust = TRUE)
     # Interpolate seasonally adjusted values
     sa <- seasadj(fit)
-    sa <- approx(idx, sa[idx], 1:n, rule = 2)$y
+    sa <- approx(idx, sa[idx], seq_len(n), rule = 2)$y
     # Replace original missing values
     seas <- seasonal(fit)
     if (NCOL(seas) > 1) {
@@ -213,7 +213,7 @@ tsoutliers <- function(x, iterate = 2, lambda = NULL) {
   }
 
   # Use super-smoother on the (seasonally adjusted) data
-  tt <- 1:n
+  tt <- seq_len(n)
   mod <- supsmu(tt, xx)
   resid <- xx - mod$y
 

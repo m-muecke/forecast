@@ -42,7 +42,7 @@ monthdays <- function(x) {
     stop("Not monthly or quarterly data")
   }
   nyears <- round(length(x) / f + 1) + 1
-  years <- (1:nyears) + (start(x)[1] - 1)
+  years <- seq_len(nyears) + (start(x)[1] - 1)
   leap.years <- ((years %% 4 == 0) & !(years %% 100 == 0 & years %% 400 != 0))[
     1:nyears
   ]
@@ -246,7 +246,7 @@ fourier <- function(x, K, h = NULL) {
   if (is.null(h)) {
     ...fourier(x, K, seq_len(NROW(x)))
   } else {
-    ...fourier(x, K, NROW(x) + (1:h))
+    ...fourier(x, K, NROW(x) + seq_len(h))
   }
 }
 
@@ -254,7 +254,7 @@ fourier <- function(x, K, h = NULL) {
 #' @export
 fourierf <- function(x, K, h) {
   warning("fourierf() is deprecated, please use fourier()")
-  ...fourier(x, K, length(x) + (1:h))
+  ...fourier(x, K, length(x) + seq_len(h))
 }
 
 # Function to do the work.
@@ -277,11 +277,11 @@ fourierf <- function(x, K, h) {
   labels <- character(0)
   for (j in seq_along(period)) {
     if (K[j] > 0) {
-      p <- c(p, (1:K[j]) / period[j])
+      p <- c(p, seq_len(K[j]) / period[j])
       labels <- c(
         labels,
         paste(
-          paste0(c("S", "C"), rep(1:K[j], rep(2, K[j]))),
+          paste0(c("S", "C"), rep(seq_len(K[j]), rep(2, K[j]))),
           round(period[j]),
           sep = "-"
         )

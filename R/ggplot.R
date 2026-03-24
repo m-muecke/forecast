@@ -283,13 +283,13 @@ autoplot.mpacf <- function(object, ...) {
   }
   if (!is.null(object$lower)) {
     data <- data.frame(
-      Lag = 1:object$lag,
+      Lag = seq_len(object$lag),
       z = object$z,
       sig = (object$lower < 0 & object$upper > 0),
       check.names = FALSE
     )
     cidata <- data.frame(
-      Lag = rep(1:object$lag, each = 2) + c(-0.5, 0.5),
+      Lag = rep(seq_len(object$lag), each = 2) + c(-0.5, 0.5),
       z = rep(object$z, each = 2),
       upper = rep(object$upper, each = 2),
       lower = rep(object$lower, each = 2),
@@ -297,7 +297,7 @@ autoplot.mpacf <- function(object, ...) {
     )
     plotpi <- TRUE
   } else {
-    data <- data.frame(Lag = 1:object$lag, z = object$z, check.names = FALSE)
+    data <- data.frame(Lag = seq_len(object$lag), z = object$z, check.names = FALSE)
     plotpi <- FALSE
   }
   # Initialise ggplot object
@@ -1251,7 +1251,7 @@ ggtsdisplay <- function(
 gglagplot <- function(
   x,
   lags = if (frequency(x) > 9) 16 else 9,
-  set.lags = 1:lags,
+  set.lags = seq_len(lags),
   diag = TRUE,
   diag.col = "gray",
   do.lines = TRUE,
@@ -1410,7 +1410,7 @@ gglagplot <- function(
 gglagchull <- function(
   x,
   lags = if (frequency(x) > 1) min(12, frequency(x)) else 4,
-  set.lags = 1:lags,
+  set.lags = seq_len(lags),
   diag = TRUE,
   diag.col = "gray",
   ...
@@ -1585,7 +1585,7 @@ ggsubseriesplot <- function(
     xbreaks <- month.abb
     xlab <- "Month"
   } else {
-    xbreaks <- 1:frequency(x)
+    xbreaks <- seq_len(frequency(x))
     xlab <- "Season"
   }
   if (!is.null(labels)) {
@@ -1600,7 +1600,7 @@ ggsubseriesplot <- function(
 
   # X-axis
   p <- p +
-    ggplot2::scale_x_continuous(breaks = 0.5 + (1:xfreq), labels = xbreaks)
+    ggplot2::scale_x_continuous(breaks = 0.5 + seq_len(xfreq), labels = xbreaks)
 
   # Graph labels
   p <- p + ggAddExtras(ylab = deparse1(substitute(x)), xlab = xlab)
@@ -1742,7 +1742,7 @@ ggseasonplot <- function(
     labs <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     xLab <- "Day"
   } else if (s == 52) {
-    labs <- 1:s
+    labs <- seq_len(s)
     xLab <- "Week"
   } else if (s == 24) {
     labs <- 0:(s - 1)
@@ -1751,7 +1751,7 @@ ggseasonplot <- function(
     labs <- seq(0, 23.5, by = 0.5)
     xLab <- "Half-hour"
   } else {
-    labs <- 1:s
+    labs <- seq_len(s)
     xLab <- "Season"
   }
 

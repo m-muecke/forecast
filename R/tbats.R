@@ -961,7 +961,7 @@ tbats.components <- function(x) {
       )
     }
     if (nseas > 1) {
-      colnames(out)[nonseas + 1:nseas] <- paste0("season", 1:nseas)
+      colnames(out)[nonseas + seq_len(nseas)] <- paste0("season", seq_len(nseas))
     }
   }
 

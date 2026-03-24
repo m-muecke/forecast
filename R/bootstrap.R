@@ -5,7 +5,7 @@
 tl <- function(x, ...) {
   x <- as.ts(x)
   n <- length(x)
-  tt <- 1:n
+  tt <- seq_len(n)
   fit <- supsmu(tt, x)
   out <- ts(cbind(trend = fit$y, remainder = x - fit$y))
   tsp(out) <- tsp(x)

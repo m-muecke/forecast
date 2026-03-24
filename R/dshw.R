@@ -193,7 +193,7 @@ dshw <- function(
   }
 
   # Forecasts
-  fcast <- (s + (1:h) * t) *
+  fcast <- (s + seq_len(h) * t) *
     rep(I[n + (1:period1)], h / period1 + 1)[1:h] *
     rep(w[n + (1:period2)], h / period2 + 1)[1:h]
   fcast <- msts(fcast, c(period1, period2), start = tsp(y)[2] + 1 / tsp(y)[3])
@@ -206,7 +206,7 @@ dshw <- function(
   e <- msts(e, c(period1, period2))
   if (armethod) {
     yhat <- yhat + phi * c(0, e[-n])
-    fcast <- fcast + phi^(1:h) * e[n]
+    fcast <- fcast + phi^seq_len(h) * e[n]
     e <- y - yhat
   }
   mse <- mean(e^2)

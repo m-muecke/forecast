@@ -154,19 +154,19 @@ seasonalaxis <- function(frequency, nlags, type, plot = TRUE) {
 
     # Defaults for labelled tick points
     if (type == "acf") {
-      out <- pretty(1:nlags)
+      out <- pretty(seq_len(nlags))
     } else {
       out <- pretty(-nlags:nlags)
     }
 
     if (frequency == 1) {
       if (type == "acf" && nlags <= 16) {
-        out <- 1:nlags
+        out <- seq_len(nlags)
       } else if (type == "ccf" && nlags <= 8) {
         out <- (-nlags:nlags)
       } else {
         if (nlags <= 30 && type == "acf") {
-          out2 <- 1:nlags
+          out2 <- seq_len(nlags)
         } else if (nlags <= 15 && type == "ccf") {
           out2 <- (-nlags:nlags)
         }
@@ -179,11 +179,11 @@ seasonalaxis <- function(frequency, nlags, type, plot = TRUE) {
         ((type == "acf" && np >= 2L) || (type == "ccf" && np >= 1L))
     ) {
       if (type == "acf" && nlags <= 40) {
-        out <- frequency * (1:np)
-        out2 <- 1:nlags
+        out <- frequency * seq_len(np)
+        out2 <- seq_len(nlags)
         # Add half-years
         if (nlags <= 30 && evenfreq && np <= 3) {
-          out <- c(out, frequency * ((1:np) - 0.5))
+          out <- c(out, frequency * (seq_len(np) - 0.5))
         }
       } else if (type == "ccf" && nlags <= 20) {
         out <- frequency * (-np:np)
@@ -480,7 +480,7 @@ plot.mpacf <- function(
   ...
 ) {
   object <- x
-  lagx <- 1:object$lag
+  lagx <- seq_len(object$lag)
 
   if (is.null(xlim)) {
     xlim <- c(1, object$lag)

@@ -136,7 +136,7 @@ tsCV <- function(
   if (h == 1) {
     return(e[, 1L])
   } else {
-    colnames(e) <- paste0("h=", 1:h)
+    colnames(e) <- paste0("h=", seq_len(h))
     return(e)
   }
 }
@@ -206,9 +206,9 @@ CVar <- function(
   # Set up folds
   ind <- seq_len(nx)
   fold <- if (blocked) {
-    sort(rep_len(1:k, nx))
+    sort(rep_len(seq_len(k), nx))
   } else {
-    sample(rep_len(1:k, nx))
+    sample(rep_len(seq_len(k), nx))
   }
 
   cvacc <- matrix(NA_real_, nrow = k, ncol = 7)

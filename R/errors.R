@@ -35,7 +35,7 @@ testaccuracy <- function(f, x, test, d, D) {
   }
   n <- length(x)
   if (is.null(test)) {
-    test <- 1:n
+    test <- seq_len(n)
   } else if (min(test) < 1 || max(test) > n) {
     warning("test elements must be within sample")
     test <- test[test >= 1 & test <= n]

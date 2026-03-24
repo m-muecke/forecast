@@ -508,7 +508,7 @@ plot.forecast <- function(
     if (is.ts(x$upper)) {
       xxx <- time(x$upper)
     } else {
-      xxx <- tsp(pred.mean)[1] - 1 / freq + (1:npred) / freq
+      xxx <- tsp(pred.mean)[1] - 1 / freq + seq_len(npred) / freq
     }
     idx <- rev(order(x$level))
     nint <- length(x$level)

@@ -186,7 +186,7 @@ forecast.rw_model <- function(
 ) {
   lag <- object$par$lag
   fullperiods <- (h - 1) / lag + 1
-  steps <- rep(1:fullperiods, rep(lag, fullperiods))[1:h]
+  steps <- rep(seq_len(fullperiods), rep(lag, fullperiods))[1:h]
 
   # Point forecasts
   fc <- rep(object$future, fullperiods)[1:h] + steps * object$par$drift

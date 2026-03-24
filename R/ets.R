@@ -220,7 +220,7 @@ ets <- function(
       if (seasontype != "N") {
         colnames(model$states)[
           (2 + (trendtype != "N")):ncol(model$states)
-        ] <- paste0("s", 1:m)
+        ] <- paste0("s", seq_len(m))
       }
       model$fitted <- ts(e$fits, frequency = tsp.y[3], start = tsp.y[1])
       model$residuals <- ts(e$e, frequency = tsp.y[3], start = tsp.y[1])
@@ -804,7 +804,7 @@ etsmodel <- function(
     colnames(states)[2] <- "b"
   }
   if (seasontype != "N") {
-    colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste0("s", 1:m)
+    colnames(states)[(2 + (trendtype != "N")):ncol(states)] <- paste0("s", seq_len(m))
   }
 
   list(
@@ -1062,12 +1062,12 @@ initstate <- function(y, trendtype, seasontype) {
       fit <- tslm(y ~ trend + fouriery)
       if (seasontype == "A") {
         y.d <- list(
-          seasonal = y - fit$coefficients[1] - fit$coefficients[2] * (1:n)
+          seasonal = y - fit$coefficients[1] - fit$coefficients[2] * seq_len(n)
         )
       } else {
         # seasontype=="M". Biased method, but we only need a starting point
         y.d <- list(
-          seasonal = y / (fit$coefficients[1] + fit$coefficients[2] * (1:n))
+          seasonal = y / (fit$coefficients[1] + fit$coefficients[2] * seq_len(n))
         )
       }
     } else {

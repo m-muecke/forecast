@@ -217,7 +217,7 @@ seasonplot <- function(
     x <- c(rep(NA, startperiod - 1), x)
   }
   x <- c(x, rep(NA, s - length(x) %% s))
-  Season <- rep(c(1:s, NA), length(x) / s)
+  Season <- rep(c(seq_len(s), NA), length(x) / s)
   xnew <- rep(NA, length(x))
   xnew[!is.na(Season)] <- x
 
@@ -231,7 +231,7 @@ seasonplot <- function(
     labs <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     xLab <- "Day"
   } else if (s == 52) {
-    labs <- 1:s
+    labs <- seq_len(s)
     xLab <- "Week"
   } else if (s == 24) {
     labs <- 0:(s - 1)
@@ -241,7 +241,7 @@ seasonplot <- function(
     xLab <- "Half-hour"
   } else {
     if (s < 20) {
-      labs <- 1:s
+      labs <- seq_len(s)
     } else {
       labs <- NULL
     }
@@ -316,6 +316,6 @@ seasonplot <- function(
   if (is.null(labs)) {
     axis(1, ...)
   } else {
-    axis(1, labels = season.labels, at = 1:s, ...)
+    axis(1, labels = season.labels, at = seq_len(s), ...)
   }
 }
