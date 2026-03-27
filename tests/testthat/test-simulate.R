@@ -111,3 +111,13 @@ test_that("simulated_ModelAR", {
   expect_equal(fc1$lower, fc2$lower, tolerance = 1e-0)
   expect_equal(fc1$upper, fc2$upper, tolerance = 1e-0)
 })
+
+test_that("simulate_forecast works with innov", {
+  fit <- rw_model(gold)
+  h <- 10
+  npaths <- 100
+  fc <- forecast(fit, h = h, simulate = TRUE, npaths = npaths, innov = rnorm(h * npaths))
+  expect_length(fc$mean, h)
+  expect_shape(fc$lower, ncol = 2)
+  expect_shape(fc$upper, ncol = 2)
+})
