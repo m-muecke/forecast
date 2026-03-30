@@ -74,6 +74,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   }
 
   ## Grab any variables missing from data
+  dataname <- NULL
   if (!missing(data)) {
     # Check for any missing variables in data
     vars <- vars[c(TRUE, !as.character(vars[-1]) %in% colnames(data))]
@@ -172,7 +173,7 @@ tslm <- function(formula, data, subset, lambda = NULL, biasadj = FALSE, ...) {
   ]) <- tspx
   fit$call <- cl
   fit$method <- "Linear regression model"
-  if (exists("dataname")) {
+  if (!is.null(dataname)) {
     fit$call$data <- dataname
   }
   if (!is.null(lambda)) {
@@ -304,6 +305,7 @@ forecast.lm <- function(
   # Add trend and seasonal to data frame
   oldterms <- terms(object)
   # Adjust terms for function variables and rename datamat colnames to match.
+  oldnewdata <- NULL
   if (!missing(newdata)) {
     reqvars <- as.character(attr(object$terms, "variables")[-1])[
       -attr(object$terms, "response")
@@ -436,7 +438,7 @@ forecast.lm <- function(
     newdata <- cbind(newdata, season)
   }
   newdata <- as.data.frame(newdata)
-  if (!exists("oldnewdata")) {
+  if (is.null(oldnewdata)) {
     oldnewdata <- newdata
   }
   # If only one column, assume its name.
