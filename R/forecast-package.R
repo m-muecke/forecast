@@ -1,7 +1,7 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @import parallel
+#' @importFrom mirai daemons mirai_map status
 #' @import Rcpp
 #'
 #' @importFrom colorspace sequential_hcl

@@ -1,5 +1,6 @@
 # forecast (development version)
 
+* `auto.arima()`, `bats()`, `nnetar()`, and `tbats()` now use the mirai package for parallel processing. The `num.cores` argument is deprecated; set up parallel workers with `mirai::daemons()` before calling these functions instead.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.

@@ -138,14 +138,11 @@ biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
 
 \item{parallel}{If \code{TRUE} and \code{stepwise = FALSE}, then the specification
-search is done in parallel via \code{\link[parallel:mclapply]{parallel::mclapply()}}. This can give a
-significant speedup on multicore machines. On Windows, this option always
-fails because forking is not supported.}
+search is done in parallel via \code{\link[mirai:mirai_map]{mirai::mirai_map()}}. This can give a
+significant speedup on multicore machines.}
 
-\item{num.cores}{Allows the user to specify the amount of parallel processes
-to be used if \code{parallel = TRUE} and \code{stepwise = FALSE}. If \code{NULL}, then the
-number of logical cores is automatically detected and all available cores
-are used.}
+\item{num.cores}{Deprecated. Use \code{\link[mirai:daemons]{mirai::daemons()}} to set up parallel workers before calling
+this function.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 

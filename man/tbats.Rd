@@ -48,9 +48,8 @@ errors or not. If \code{TRUE} the best fit is selected by AIC. If
 \item{use.parallel}{\code{TRUE}/\code{FALSE} indicates whether or not to use
 parallel processing.}
 
-\item{num.cores}{The number of parallel processes to be used if using
-parallel processing. If \code{NULL} then the number of logical cores is
-detected and all available cores are used.}
+\item{num.cores}{Deprecated. Use \code{\link[mirai:daemons]{mirai::daemons()}} to set up parallel workers before calling
+this function.}
 
 \item{bc.lower}{The lower limit (inclusive) for the Box-Cox transformation.}
 

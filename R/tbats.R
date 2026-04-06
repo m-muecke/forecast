@@ -55,6 +55,12 @@ tbats <- function(
   model = NULL,
   ...
 ) {
+  if (!missing(num.cores)) {
+    .Deprecated(
+      msg = "num.cores is deprecated. Use mirai::daemons() to set up parallel workers."
+    )
+  }
+
   if (!is.numeric(y) || NCOL(y) > 1) {
     stop("y should be a univariate time series")
   }
@@ -137,7 +143,6 @@ tbats <- function(
     use.damped.trend = use.damped.trend,
     use.arma.errors = use.arma.errors,
     use.parallel = use.parallel,
-    num.cores = num.cores,
     bc.lower = bc.lower,
     bc.upper = bc.upper,
     biasadj = biasadj,
@@ -181,14 +186,6 @@ tbats <- function(
 
   y <- as.numeric(y)
   k.vector <- rep(1, length(seasonal.periods))
-
-  if (use.parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
-    clus <- makeCluster(num.cores)
-    on.exit(stopCluster(clus), add = TRUE)
-  }
 
   best.model <- try(
     fitSpecificTBATS(
@@ -283,22 +280,24 @@ tbats <- function(
 
       ### if(use.parallel) then do parallel
       if (use.parallel) {
+        ensure_daemons()
         k.control.array <- rbind(step.up.k, step.down.k, k.vector)
-        models.list <- clusterApplyLB(
-          clus,
+        models.list <- mirai_map(
           1:3,
           parFitSpecificTBATS,
-          y = y,
-          box.cox = model.params[1],
-          trend = model.params[2],
-          damping = model.params[3],
-          seasonal.periods = seasonal.periods,
-          k.control.matrix = k.control.array,
-          init.box.cox = init.box.cox,
-          bc.lower = bc.lower,
-          bc.upper = bc.upper,
-          biasadj = biasadj
-        )
+          .args = list(
+            y = y,
+            box.cox = model.params[1],
+            trend = model.params[2],
+            damping = model.params[3],
+            seasonal.periods = seasonal.periods,
+            k.control.matrix = k.control.array,
+            init.box.cox = init.box.cox,
+            bc.lower = bc.lower,
+            bc.upper = bc.upper,
+            biasadj = biasadj
+          )
+        )[]
         up.model <- models.list[[1]]
         level.model <- models.list[[3]]
         down.model <- models.list[[2]]
@@ -479,23 +478,25 @@ tbats <- function(
         }
       }
     }
-    models.list <- clusterApplyLB(
-      clus,
+    ensure_daemons()
+    models.list <- mirai_map(
       seq_len(nrow(control.array)),
       parFilterTBATSSpecifics,
-      y = y,
-      control.array = control.array,
-      model.params = model.params,
-      seasonal.periods = seasonal.periods,
-      k.vector = k.vector,
-      use.arma.errors = use.arma.errors,
-      aux.model = aux.model,
-      init.box.cox = init.box.cox,
-      bc.lower = bc.lower,
-      bc.upper = bc.upper,
-      biasadj = biasadj,
-      ...
-    )
+      .args = list(
+        y = y,
+        control.array = control.array,
+        model.params = model.params,
+        seasonal.periods = seasonal.periods,
+        k.vector = k.vector,
+        use.arma.errors = use.arma.errors,
+        aux.model = aux.model,
+        init.box.cox = init.box.cox,
+        bc.lower = bc.lower,
+        bc.upper = bc.upper,
+        biasadj = biasadj,
+        ...
+      )
+    )[]
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))

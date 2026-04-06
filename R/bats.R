@@ -28,9 +28,8 @@
 #' `FALSE` then the selection algorithm does not consider ARMA errors.
 #' @param use.parallel `TRUE`/`FALSE` indicates whether or not to use
 #' parallel processing.
-#' @param num.cores The number of parallel processes to be used if using
-#' parallel processing. If `NULL` then the number of logical cores is
-#' detected and all available cores are used.
+#' @param num.cores Deprecated. Use [mirai::daemons()] to set up parallel workers before calling
+#' this function.
 #' @param bc.lower The lower limit (inclusive) for the Box-Cox transformation.
 #' @param bc.upper The upper limit (inclusive) for the Box-Cox transformation.
 #' @param model Output from a previous call to `bats`. If model is passed,
@@ -77,6 +76,12 @@ bats <- function(
   model = NULL,
   ...
 ) {
+  if (!missing(num.cores)) {
+    .Deprecated(
+      msg = "num.cores is deprecated. Use mirai::daemons() to set up parallel workers."
+    )
+  }
+
   if (!is.numeric(y) || NCOL(y) > 1) {
     stop("y should be a univariate time series")
   }
@@ -210,25 +215,22 @@ bats <- function(
       }
     }
     ## Fit the models
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
-    clus <- makeCluster(num.cores)
-    on.exit(stopCluster(clus), add = TRUE)
-    models.list <- clusterApplyLB(
-      clus,
+    ensure_daemons()
+    models.list <- mirai_map(
       seq_len(nrow(control.array)),
       parFilterSpecifics,
-      y = y,
-      control.array = control.array,
-      seasonal.periods = seasonal.periods,
-      use.arma.errors = use.arma.errors,
-      init.box.cox = init.box.cox,
-      bc.lower = bc.lower,
-      bc.upper = bc.upper,
-      biasadj = biasadj,
-      ...
-    )
+      .args = list(
+        control.array = control.array,
+        y = y,
+        seasonal.periods = seasonal.periods,
+        use.arma.errors = use.arma.errors,
+        init.box.cox = init.box.cox,
+        bc.lower = bc.lower,
+        bc.upper = bc.upper,
+        biasadj = biasadj,
+        ...
+      )
+    )[]
     ## Choose the best model
     #### Get the AICs
     aics <- numeric(nrow(control.array))

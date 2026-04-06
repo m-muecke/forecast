@@ -62,13 +62,10 @@
 #' @param allowdrift If `TRUE`, models with drift terms are considered.
 #' @param allowmean If `TRUE`, models with a non-zero mean are considered.
 #' @param parallel If `TRUE` and `stepwise = FALSE`, then the specification
-#' search is done in parallel via [parallel::mclapply()]. This can give a
-#' significant speedup on multicore machines. On Windows, this option always
-#' fails because forking is not supported.
-#' @param num.cores Allows the user to specify the amount of parallel processes
-#' to be used if `parallel = TRUE` and `stepwise = FALSE`. If `NULL`, then the
-#' number of logical cores is automatically detected and all available cores
-#' are used.
+#' search is done in parallel via [mirai::mirai_map()]. This can give a
+#' significant speedup on multicore machines.
+#' @param num.cores Deprecated. Use [mirai::daemons()] to set up parallel workers before calling
+#' this function.
 #'
 #' @return Same as for [Arima()]
 #' @author Rob J Hyndman
@@ -124,6 +121,12 @@ auto.arima <- function(
   x = y,
   ...
 ) {
+  if (!missing(num.cores)) {
+    .Deprecated(
+      msg = "num.cores is deprecated. Use mirai::daemons() to set up parallel workers."
+    )
+  }
+
   # Only non-stepwise parallel implemented so far.
   if (stepwise && parallel) {
     warning(
@@ -457,7 +460,6 @@ auto.arima <- function(
       allowdrift = allowdrift,
       allowmean = allowmean,
       parallel = parallel,
-      num.cores = num.cores,
       ...
     )
     bestfit$call <- match.call()

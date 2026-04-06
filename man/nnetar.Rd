@@ -63,12 +63,11 @@ means and dividing by their respective standard deviations. If \code{lambda}
 is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 
 \item{parallel}{If \code{TRUE}, then the specification search is done in parallel
-via \code{\link[parallel:parLapply]{parallel::parLapply()}}. This can give a significant speedup on
+via \code{\link[mirai:mirai_map]{mirai::mirai_map()}}. This can give a significant speedup on
 multicore machines.}
 
-\item{num.cores}{Allows the user to specify the amount of parallel processes
-to be used if \code{parallel = TRUE}. If \code{NULL}, then the number of logical cores
-is automatically detected and all available cores are used.}
+\item{num.cores}{Deprecated. Use \code{\link[mirai:daemons]{mirai::daemons()}} to set up parallel workers before calling
+this function.}
 
 \item{x}{Deprecated. Included for backwards compatibility.}
 

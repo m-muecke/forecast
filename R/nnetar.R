@@ -51,11 +51,10 @@
 #' means and dividing by their respective standard deviations. If `lambda`
 #' is not `NULL`, scaling is applied after Box-Cox transformation.
 #' @param parallel If `TRUE`, then the specification search is done in parallel
-#' via [parallel::parLapply()]. This can give a significant speedup on
+#' via [mirai::mirai_map()]. This can give a significant speedup on
 #' multicore machines.
-#' @param num.cores Allows the user to specify the amount of parallel processes
-#' to be used if `parallel = TRUE`. If `NULL`, then the number of logical cores
-#' is automatically detected and all available cores are used.
+#' @param num.cores Deprecated. Use [mirai::daemons()] to set up parallel workers before calling
+#' this function.
 #' @param ... Other arguments passed to [nnet::nnet()] for `nnetar`.
 #'
 #' @return Returns an object of class `nnetar`.
@@ -111,6 +110,12 @@ nnetar <- function(
   x = y,
   ...
 ) {
+  if (!missing(num.cores)) {
+    .Deprecated(
+      msg = "num.cores is deprecated. Use mirai::daemons() to set up parallel workers."
+    )
+  }
+
   useoldmodel <- FALSE
   yname <- deparse1(substitute(y))
   if (!is.null(model)) {
@@ -332,8 +337,7 @@ nnetar <- function(
       y[j],
       size = size,
       model = model,
-      parallel = parallel,
-      num.cores = num.cores
+      parallel = parallel
     )
   } else {
     fit <- avnnet(
@@ -342,7 +346,6 @@ nnetar <- function(
       size = size,
       repeats = repeats,
       parallel = parallel,
-      num.cores = num.cores,
       ...
     )
   }
@@ -403,21 +406,18 @@ avnnet <- function(
   y,
   repeats,
   parallel,
-  num.cores,
   linout = TRUE,
   trace = FALSE,
   ...
 ) {
   if (parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
-    cl <- makeCluster(num.cores)
-    on.exit(stopCluster(cl), add = TRUE)
-    mods <- parLapply(cl, seq_len(repeats), function(i) {
-      nnet::nnet(x = x, y = y, linout = linout, trace = trace, ...)
-    })
-    return(structure(mods, class = "nnetarmodels"))
+    ensure_daemons()
+    mods <- mirai_map(
+      seq_len(repeats),
+      function(i, ...) nnet::nnet(...),
+      .args = list(x = x, y = y, linout = linout, trace = trace, ...)
+    )[]
+    return(structure(as.list(mods), class = "nnetarmodels"))
   }
 
   mods <- vector("list", repeats)
@@ -428,7 +428,7 @@ avnnet <- function(
 }
 
 # Fit old model to new data
-oldmodel_avnnet <- function(x, y, size, model, parallel, num.cores) {
+oldmodel_avnnet <- function(x, y, size, model, parallel) {
   repeats <- length(model$model)
   args <- list(x = x, y = y, size = size, linout = 1, trace = FALSE)
   # include additional nnet arguments
@@ -437,16 +437,17 @@ oldmodel_avnnet <- function(x, y, size, model, parallel, num.cores) {
   args$maxit <- 0
 
   if (parallel) {
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
-    cl <- makeCluster(num.cores)
-    on.exit(stopCluster(cl), add = TRUE)
-    mods <- parLapply(cl, seq_len(repeats), function(i) {
-      args$Wts <- model$model[[i]]$wts
-      do.call(nnet::nnet, args)
-    })
-    return(structure(mods, class = "nnetarmodels"))
+    ensure_daemons()
+    mods <- mirai_map(
+      seq_len(repeats),
+      function(i) {
+        args$Wts <- model$model[[i]]$wts
+        do.call(nnet::nnet, args)
+      },
+      args = args,
+      model = model
+    )[]
+    return(structure(as.list(mods), class = "nnetarmodels"))
   }
 
   mods <- vector("list", repeats)
@@ -580,7 +581,12 @@ forecast.nnetar <- function(
     if (anyNA(newdata)) {
       fcast[i] <- NA_real_
     } else {
-      fcast[i] <- mean(vapply(object$model, predict, numeric(1), newdata = newdata))
+      fcast[i] <- mean(vapply(
+        object$model,
+        predict,
+        numeric(1),
+        newdata = newdata
+      ))
     }
     flag <- c(fcast[i], flag[-maxlag])
   }

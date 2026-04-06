@@ -16,7 +16,6 @@ search.arima <- function(
   allowdrift = TRUE,
   allowmean = TRUE,
   parallel = FALSE,
-  num.cores = 2,
   ...
 ) {
   ic <- match.arg(ic)
@@ -63,24 +62,31 @@ search.arima <- function(
       }
     }
   } else if (parallel) {
-    par.all.arima <- function(i, max.order) {
+    ensure_daemons()
+    dots <- list(...)
+    par.all.arima <- function(i) {
       p <- to.check[i, "p"]
       q <- to.check[i, "q"]
       P <- to.check[i, "P"]
       Q <- to.check[i, "Q"]
       K <- to.check[i, "K"]
       if (p + q + P + Q <= max.order) {
-        fit <- myarima(
-          x,
-          order = c(p, d, q),
-          seasonal = c(P, D, Q),
-          constant = (K == 1),
-          trace = trace,
-          ic = ic,
-          approximation = approximation,
-          offset = offset,
-          xreg = xreg,
-          ...
+        fit <- do.call(
+          myarima,
+          c(
+            list(
+              x,
+              order = c(p, d, q),
+              seasonal = c(P, D, Q),
+              constant = (K == 1),
+              trace = trace,
+              ic = ic,
+              approximation = approximation,
+              offset = offset,
+              xreg = xreg
+            ),
+            dots
+          )
         )
         cbind(fit, K)
       } else {
@@ -88,16 +94,22 @@ search.arima <- function(
       }
     }
 
-    if (is.null(num.cores)) {
-      num.cores <- detectCores()
-    }
-
-    all.models <- mclapply(
-      X = seq_len(nrow(to.check)),
-      FUN = par.all.arima,
+    all.models <- mirai_map(
+      seq_len(nrow(to.check)),
+      par.all.arima,
+      myarima = myarima,
+      to.check = to.check,
+      x = x,
+      d = d,
+      D = D,
       max.order = max.order,
-      mc.cores = num.cores
-    )
+      trace = trace,
+      ic = ic,
+      approximation = approximation,
+      offset = offset,
+      xreg = xreg,
+      dots = dots
+    )[]
 
     # Removing null elements
     all.models <- all.models[lengths(all.models) > 0]
@@ -155,7 +167,6 @@ search.arima <- function(
           allowdrift = allowdrift,
           allowmean = allowmean,
           parallel = parallel,
-          num.cores = num.cores,
           ...
         )
         bestfit$ic <- switch(
