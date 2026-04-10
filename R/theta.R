@@ -16,6 +16,7 @@
 #' package.
 #'
 #' @inheritParams ets
+#' @param type Type of seasonal decomposition. Either `"multiplicative"` (default) or `"additive"`.
 #' @return An object of class `theta_model`.
 #' @author Rob J Hyndman
 #' @seealso [thetaf()]
@@ -30,7 +31,13 @@
 #' nile_fit <- theta_model(Nile)
 #' forecast(nile_fit) |> autoplot()
 #' @export
-theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
+theta_model <- function(
+  y,
+  lambda = NULL,
+  biasadj = FALSE,
+  type = c("multiplicative", "additive")
+) {
+  type <- match.arg(type)
   series <- deparse1(substitute(y))
   n <- length(y)
   origy <- y
@@ -50,8 +57,8 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
     seasonal <- FALSE
   }
   if (seasonal) {
-    decomp <- decompose(y, type = "multiplicative")
-    if (any(abs(seasonal(decomp)) < 1e-4)) {
+    decomp <- decompose(y, type = type)
+    if (type == "multiplicative" && any(abs(seasonal(decomp)) < 1e-4)) {
       warning("Seasonal indexes close to zero. Using non-seasonal Theta method")
       seasonal <- FALSE
     } else {
@@ -68,7 +75,11 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
   fitted <- fitted(ses_model)
   res <- y - fitted
   if (seasonal) {
-    fitted <- fitted * seas_component
+    if (type == "multiplicative") {
+      fitted <- fitted * seas_component
+    } else {
+      fitted <- fitted + seas_component
+    }
   }
   if (!is.null(lambda)) {
     fitted <- InvBoxCox(fitted, lambda, biasadj, var(res))
@@ -87,6 +98,7 @@ theta_model <- function(y, lambda = NULL, biasadj = FALSE) {
       fitted = fitted,
       residuals = origy - fitted,
       seas_component = if (seasonal) tail(seas_component, m) else NULL,
+      type = type,
       lambda = lambda,
       call = match.call()
     ),
@@ -104,7 +116,7 @@ print.theta_model <- function(
   cat(x$series, "\n")
   cat("Call:", deparse(x$call), "\n")
   if (!is.null(x$seas_component)) {
-    cat("Deseasonalized\n")
+    cat("Deseasonalized (", x$type, ")\n", sep = "")
   }
   cat("  alpha:", format(x$alpha, digits = digits), "\n")
   cat("  drift:", format(x$drift, digits = digits), "\n")
@@ -166,8 +178,12 @@ forecast.theta_model <- function(
 
   # Reseasonalize
   if (seasonal) {
-    fcast$mean <- fcast$mean *
-      rep(object$seas_component, trunc(1 + h / m))[seq_len(h)]
+    seas_h <- rep(object$seas_component, trunc(1 + h / m))[seq_len(h)]
+    if (object$type == "multiplicative") {
+      fcast$mean <- fcast$mean * seas_h
+    } else {
+      fcast$mean <- fcast$mean + seas_h
+    }
   }
 
   # Find prediction intervals
@@ -206,9 +222,10 @@ thetaf <- function(
   fan = FALSE,
   lambda = NULL,
   biasadj = FALSE,
+  type = c("multiplicative", "additive"),
   x = y,
   ...
 ) {
-  fit <- theta_model(x, lambda = lambda, biasadj = biasadj)
+  fit <- theta_model(x, lambda = lambda, biasadj = biasadj, type = type)
   forecast(fit, h = h, level = level, fan = fan, ...)
 }

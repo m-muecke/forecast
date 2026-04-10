@@ -20,6 +20,25 @@ test_that("theta_model fits seasonal data", {
   expect_output(print(fit), "Deseasonalized")
 })
 
+test_that("theta_model with additive decomposition", {
+  fit_mult <- theta_model(USAccDeaths, type = "multiplicative")
+  fit_add <- theta_model(USAccDeaths, type = "additive")
+  expect_false(is.null(fit_mult$seas_component))
+  expect_false(is.null(fit_add$seas_component))
+  expect_equal(fit_mult$type, "multiplicative")
+  expect_equal(fit_add$type, "additive")
+  expect_false(identical(fit_mult$fitted, fit_add$fitted))
+  expect_equal(sum(fit_add$seas_component), 0, tolerance = 1e-6)
+  expect_equal(mean(fit_mult$seas_component), 1, tolerance = 1e-6)
+})
+
+test_that("forecast.theta_model with additive decomposition", {
+  fit <- theta_model(USAccDeaths, type = "additive")
+  fc <- forecast(fit, h = 12)
+  expect_s3_class(fc, "forecast")
+  expect_length(fc$mean, 12)
+})
+
 test_that("theta_model with lambda", {
   fit <- theta_model(Nile, lambda = 0)
   expect_equal(fit$lambda, 0, ignore_attr = TRUE)
