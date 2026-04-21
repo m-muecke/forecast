@@ -63,7 +63,7 @@ rw_model <- function(
     y <- BoxCox(y, lambda)
     lambda <- attr(y, "lambda")
     attr(lambda, "biasadj") <- biasadj
-}
+  }
 
   m <- frequency(y)
   # Complete missing values with lagged values
@@ -186,10 +186,10 @@ forecast.rw_model <- function(
 ) {
   lag <- object$par$lag
   fullperiods <- (h - 1) / lag + 1
-  steps <- rep(1:fullperiods, rep(lag, fullperiods))[1:h]
+  steps <- rep(seq_len(fullperiods), rep(lag, fullperiods))[seq_len(h)]
 
   # Point forecasts
-  fc <- rep(object$future, fullperiods)[1:h] + steps * object$par$drift
+  fc <- rep(object$future, fullperiods)[seq_len(h)] + steps * object$par$drift
 
   # Intervals
   # Adjust prediction intervals to allow for drift coefficient standard error
@@ -206,7 +206,7 @@ forecast.rw_model <- function(
       object = object,
       h = h,
       level = level,
-      npaths =npaths,
+      npaths = npaths,
       bootstrap = bootstrap,
       innov = innov,
       lambda = lambda,
