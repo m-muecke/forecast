@@ -454,7 +454,7 @@ plot.forecast <- function(
     xx <- as.ts(xx)
     freq <- frequency(xx)
     nx <- max(which(!is.na(xx)))
-    xxx <- xx[1:nx]
+    xxx <- xx[seq_len(nx)]
     include <- min(include, nx)
 
     if (!showgap) {
@@ -610,12 +610,12 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
     refitarg$use.initial.values <- TRUE
   }
   for (i in seq_len(n - h)) {
-    refitarg[[1]] <- ts(x[1:i], start = tspx[1], frequency = tspx[3])
+    refitarg[[1]] <- ts(x[seq_len(i)], start = tspx[1], frequency = tspx[3])
     if (!is.null(object$xreg) && any(colnames(object$xreg) != "drift")) {
       if (any(colnames(object$xreg) == "drift")) {
         idx <- which(colnames(object$xreg) == "drift")
         refitarg$xreg <- ts(
-          object$xreg[1:i, -idx],
+          object$xreg[seq_len(i), -idx],
           start = tspx[1],
           frequency = tspx[3]
         )
@@ -626,7 +626,7 @@ hfitted.default <- function(object, h = 1, FUN = NULL, ...) {
         )
       } else {
         refitarg$xreg <- ts(
-          object$xreg[1:i, ],
+          object$xreg[seq_len(i), ],
           start = tspx[1],
           frequency = tspx[3]
         )
@@ -673,15 +673,15 @@ forecast.forecast <- function(object, ...) {
       )
     }
     tspf <- tsp(object$mean)
-    object$mean <- ts(object$mean[1:h], start = tspf[1], frequency = tspf[3])
+    object$mean <- ts(object$mean[seq_len(h)], start = tspf[1], frequency = tspf[3])
     if (!is.null(object$upper)) {
       object$upper <- ts(
-        object$upper[1:h, , drop = FALSE],
+        object$upper[seq_len(h), , drop = FALSE],
         start = tspf[1],
         frequency = tspf[3]
       )
       object$lower <- ts(
-        object$lower[1:h, , drop = FALSE],
+        object$lower[seq_len(h), , drop = FALSE],
         start = tspf[1],
         frequency = tspf[3]
       )

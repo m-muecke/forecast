@@ -88,13 +88,17 @@ sindexf <- function(object, h) {
     ss <- object$figure
     m <- frequency(object$seasonal)
     n <- length(object$trend)
-    ss <- rep(ss, n / m + 1)[1:n]
+    ss <- rep(ss, n / m + 1)[seq_len(n)]
     ss <- ss[n - (m:1) + 1]
     tsp.x <- tsp(object$seasonal)
   } else {
     stop("Object of unknown class")
   }
-  out <- ts(rep(ss, h / m + 1)[1:h], frequency = m, start = tsp.x[2] + 1 / m)
+  out <- ts(
+    rep(ss, h / m + 1)[seq_len(h)],
+    frequency = m,
+    start = tsp.x[2] + 1 / m
+  )
 
   out
 }

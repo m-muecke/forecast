@@ -1324,7 +1324,7 @@ pegelsresid.C <- function(
   n <- length(y)
   p <- length(init.state)
   x <- numeric(p * (n + 1))
-  x[1:p] <- init.state
+  x[seq_len(p)] <- init.state
   if (!damped) {
     phi <- 1
   }
