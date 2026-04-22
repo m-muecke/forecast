@@ -228,7 +228,7 @@ SD.test <- function(wts, s = frequency(wts)) {
       Fhat[i, n] <- sum(Fhataux[1:i, n])
     }
   }
-  wnw <- 1 - seq(1, ltrunc, 1) / (ltrunc + 1)
+  wnw <- 1 - seq_len(ltrunc) / (ltrunc + 1)
   Ne <- nrow(Fhataux)
   Omnw <- 0
   for (k in seq_len(ltrunc)) {

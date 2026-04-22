@@ -1033,7 +1033,7 @@ autoplot.mforecast <- function(
     # Set up grid
     # ncol: Number of columns of plots
     # nrow: Number of rows needed, calculated from # of cols
-    gridlayout <- matrix(seq(1, K), ncol = 1, nrow = K)
+    gridlayout <- matrix(seq_len(K), ncol = 1, nrow = K)
 
     grid::grid.newpage()
     grid::pushViewport(grid::viewport(
