@@ -492,7 +492,7 @@ plot.forecast <- function(
   }
   plot(
     ts(
-      c(xxx[(nx - include + 1):nx], rep(NA, npred)),
+      c(xxx[(nx - include + 1):nx], rep(NA_real_, npred)),
       end = tsp(xx)[2] + (nx - n) / freq + npred / freq,
       frequency = freq
     ),

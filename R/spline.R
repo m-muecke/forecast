@@ -144,7 +144,7 @@ spline_model <- function(
   maxO <- max(mat$Omega)
 
   # Get one-step predictors
-  yfit <- e <- ts(rep(NA, n))
+  yfit <- e <- ts(rep(NA_real_, n))
   if (n > 1000) {
     warning("Series too long to compute training set fits and residuals")
   } else {
@@ -407,7 +407,7 @@ simulate.spline_model <- function(
   } else {
     y <- object$y[sample(nhistory - length(object$y)) + seq(nhistory)]
   }
-  y <- c(y, rep(NA, nsim))
+  y <- c(y, rep(NA_real_, nsim))
   for (i in nhistory + seq(nsim) - 1) {
     mat <- spline.matrices(i, object$beta / i^3, compute_P = FALSE)
     newmat <- spline.matrices(i, object$beta / i^3, n0 = 1, compute_inverse = FALSE)
