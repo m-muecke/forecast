@@ -77,7 +77,7 @@ rw_model <- function(
   }
 
   fitted <- ts(
-    c(rep(NA, lag), head(fits, -lag)),
+    c(rep(NA_real_, lag), head(fits, -lag)),
     start = start(y),
     frequency = m
   )

@@ -304,7 +304,7 @@ forecast.HoltWinters <- function(
   # Pad fitted values with NAs
   nf <- length(fitted)
   n <- length(x)
-  fitted <- ts(c(rep(NA, n - nf), fitted))
+  fitted <- ts(c(rep(NA_real_, n - nf), fitted))
   fitted <- copy_msts(object$x, fitted)
 
   pmean <- future_msts(object$x, pmean)

@@ -91,7 +91,7 @@ copy_msts <- function(x, y) {
   if (NROW(x) > NROW(y)) {
     # Pad y with initial NAs
     if (NCOL(y) == 1) {
-      y <- c(rep(NA, NROW(x) - NROW(y)), y)
+      y <- c(rep(NA_real_, NROW(x) - NROW(y)), y)
     } else {
       y <- rbind(matrix(NA_real_, ncol = NCOL(y), nrow = NROW(x) - NROW(y)), y)
     }
