@@ -2055,7 +2055,7 @@ autoplot.seas <- function(object, labels = NULL, range.bars = NULL, ...) {
 
   # Is it additive or multiplicative?
   freq <- frequency(object$data)
-  sum_first_year <- try(sum(seasonal(object)[seq(freq)]), silent = TRUE)
+  sum_first_year <- try(sum(seasonal(object)[seq_len(freq)]), silent = TRUE)
   if (!inherits(sum_first_year, "try-error")) {
     int <- as.integer(sum_first_year > 0.5) # Closer to 1 than 0.
   } else {
@@ -2502,7 +2502,7 @@ forecast2plotdf <- function(
       intervalGap <- data.frame(
         x = rep(time(model$x)[length(model$x)], numInterval + 1),
         y = c(model$x[length(model$x)], rep(NA_real_, numInterval)),
-        level = c(NA, model$level)[seq_along(1:(numInterval + 1))],
+        level = c(NA, model$level)[seq_len(numInterval + 1)],
         ymax = c(NA, rep(model$x[length(model$x)], numInterval)),
         ymin = c(NA, rep(model$x[length(model$x)], numInterval)),
         check.names = FALSE

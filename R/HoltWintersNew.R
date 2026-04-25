@@ -65,7 +65,7 @@ HoltWintersZZ <- function(
   } else {
     ## seasonal Holt-Winters
     l.start <- mean(head(x_nonmiss, m))
-    b.start <- (mean(x_nonmiss[m + seq(m)]) - l.start) / m
+    b.start <- (mean(x_nonmiss[m + seq_len(m)]) - l.start) / m
     if (seasonal == "additive") {
       s.start <- head(x_nonmiss, m) - l.start
     } else {
@@ -206,7 +206,7 @@ HoltWintersZZ <- function(
     for (i in seq_len(m)) {
       states <- cbind(states, final.fit$season[(m - i) + (1:nr)])
     }
-    colnames(states)[nc + seq(m)] <- paste0("s", seq(m))
+    colnames(states)[nc + seq_len(m)] <- paste0("s", seq_len(m))
   }
   states <- ts(states, frequency = tspx[3], start = tspx[1] - 1 / tspx[3])
 

@@ -162,12 +162,12 @@ forecast.theta_model <- function(
 
   fcast <- forecast(object$ses_model, h = h, level = level, fan = fan, ...)
   fcast$mean <- fcast$mean +
-    object$drift * (seq(h) - 1 + (1 - (1 - object$alpha)^n) / object$alpha)
+    object$drift * (seq_len(h) - 1 + (1 - (1 - object$alpha)^n) / object$alpha)
 
   # Reseasonalize
   if (seasonal) {
     fcast$mean <- fcast$mean *
-      rep(object$seas_component, trunc(1 + h / m))[seq(h)]
+      rep(object$seas_component, trunc(1 + h / m))[seq_len(h)]
   }
 
   # Find prediction intervals

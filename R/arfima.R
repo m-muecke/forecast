@@ -281,10 +281,10 @@ forecast.fracdiff <- function(
   q <- fit$arma[2]
   phi <- theta <- numeric(h)
   if (p > 0) {
-    phi[seq(p)] <- fit$coef[seq(p)]
+    phi[seq_len(p)] <- fit$coef[seq_len(p)]
   }
   if (q > 0) {
-    theta[seq(q)] <- fit$coef[p + seq(q)]
+    theta[seq_len(q)] <- fit$coef[p + seq_len(q)]
   }
   # Calculate psi weights
   new.phi <- psi <- numeric(h)
@@ -293,9 +293,9 @@ forecast.fracdiff <- function(
     new.phi[2L:h] <- -bin.c[2L:h]
     for (i in 2L:h) {
       if (p > 0) {
-        new.phi[i] <- sum(phi[seq(i - 1)] * bin.c[rev(seq(i - 1))]) - bin.c[i]
+        new.phi[i] <- sum(phi[seq_len(i - 1)] * bin.c[rev(seq_len(i - 1))]) - bin.c[i]
       }
-      psi[i] <- sum(new.phi[2L:i] * rev(psi[seq(i - 1)])) + theta[i - 1]
+      psi[i] <- sum(new.phi[2L:i] * rev(psi[seq_len(i - 1)])) + theta[i - 1]
     }
   }
 

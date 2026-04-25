@@ -344,7 +344,7 @@ simulate.Arima <- function(
       xreg <- xreg[, colnames(xreg) != "drift", drop = FALSE]
     }
     # Create new drift column
-    xreg <- cbind(drift = as.matrix(seq(nsim) + n * future), xreg)
+    xreg <- cbind(drift = as.matrix(seq_len(nsim) + n * future), xreg)
   }
   # Check xreg has the correct dimensions
   if (use.xreg) {

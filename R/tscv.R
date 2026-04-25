@@ -130,7 +130,7 @@ tsCV <- function(
       )
     }
     if (!inherits(fc, "try-error")) {
-      e[i, ] <- y[i + seq(h)] - fc$mean[seq(h)]
+      e[i, ] <- y[i + seq_len(h)] - fc$mean[seq_len(h)]
     }
   }
   if (h == 1) {
