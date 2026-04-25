@@ -446,7 +446,7 @@ plot.forecast <- function(
 
   # Check if all historical values are missing
   if (n > 0) {
-    if (sum(is.na(xx)) == length(xx)) {
+    if (all(is.na(xx))) {
       n <- 0
     }
   }

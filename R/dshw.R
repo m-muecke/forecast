@@ -156,7 +156,7 @@ dshw <- function(
   }
 
   # Estimate parameters
-  if (sum(is.na(pars)) > 0) {
+  if (anyNA(pars)) {
     pars <- par_dshw(y, period1, period2, pars)
     alpha <- pars[1]
     beta <- pars[2]
