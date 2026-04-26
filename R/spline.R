@@ -61,7 +61,7 @@ spline.loglik <- function(beta, y, cc = 1e2) {
   n <- length(y)
   mat <- spline.matrices(n, beta / 1e6, cc = cc)
   y.star <- mat$P %*% matrix(y)
-  -log(det(mat$P)) + 0.5 * n * log(sum(y.star^2))
+  -sum(log(diag(mat$P))) + 0.5 * n * log(sum(y.star^2))
 }
 
 # Spline forecasting model
