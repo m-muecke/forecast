@@ -27,7 +27,7 @@ lpb <- function(x, nsim = 100) {
     Gamma[d == i | d == (-i)] <- gamma[i + 1]
   }
   L <- t(chol(Gamma))
-  W <- solve(L) %*% matrix(y, ncol = 1)
+  W <- solve(L, y)
   out <- ts(
     L %*%
       matrix(sample(W, n * nsim, replace = TRUE), nrow = n, ncol = nsim) +
