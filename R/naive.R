@@ -131,6 +131,7 @@ print.rw_model <- function(x, ...) {
     ))
   }
   cat(paste("Residual sd:", round(sqrt(x$sigma2), 4), "\n"))
+  invisible(x)
 }
 
 #' @export

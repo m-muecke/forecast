@@ -63,6 +63,7 @@ print.msts <- function(x, ...) {
   print(xx)
   # print(matrix(x, ncol=length(x)), nrow=1)
   cat("\n")
+  invisible(x)
 }
 
 #' @export
