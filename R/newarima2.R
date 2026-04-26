@@ -235,7 +235,7 @@ auto.arima <- function(
       }
 
       # Now check if it is rank deficient
-      sv <- svd(na.omit(cbind(rep(1, NROW(xregg)), xregg)))$d
+      sv <- svd(na.omit(cbind(1, xregg)), nu = 0, nv = 0)$d
       if (min(sv) / sum(sv) < .Machine$double.eps) {
         stop("xreg is rank deficient")
       }

@@ -255,7 +255,7 @@ SD.test <- function(wts, s = frequency(wts)) {
     }
   }
   tmp <- t(A) %*% Omfhat %*% A
-  problems <- (min(svd(tmp)$d) < .Machine$double.eps)
+  problems <- min(svd(tmp, nu = 0, nv = 0)$d) < .Machine$double.eps
   if (problems) {
     stL <- 0
   } else {
