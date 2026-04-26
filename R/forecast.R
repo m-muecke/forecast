@@ -185,6 +185,7 @@ forecast.default <- function(object, ...) forecast.ts(object, ...)
 #' @export
 print.forecast <- function(x, ...) {
   print(as.data.frame(x))
+  invisible(x)
 }
 
 #' @export
