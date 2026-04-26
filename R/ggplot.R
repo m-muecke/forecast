@@ -2375,7 +2375,7 @@ autoplot.mts <- function(
   }
 
   data <- data.frame(
-    y = as.numeric(c(object)),
+    y = as.numeric(object),
     x = rep(as.numeric(time(object)), NCOL(object)),
     series = factor(rep(cn, each = NROW(object)), levels = cn),
     check.names = FALSE
@@ -2983,7 +2983,7 @@ gghistogram <- function(
   if (missing(bins)) {
     bins <- min(500, grDevices::nclass.FD(na.exclude(x)))
   }
-  data <- data.frame(x = as.numeric(c(x)), check.names = FALSE)
+  data <- data.frame(x = as.numeric(x), check.names = FALSE)
   # Initialise ggplot object and plot histogram
   binwidth <- (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / bins
   p <- ggplot2::ggplot() +
