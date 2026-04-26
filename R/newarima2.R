@@ -1402,8 +1402,7 @@ arima.string <- function(object, padding = FALSE) {
     }
   }
   if (!padding) {
-    # Strip trailing spaces
-    result <- gsub("[ ]*$", "", result)
+    result <- trimws(result, "right")
   }
   result
 }
