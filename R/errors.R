@@ -122,7 +122,7 @@ trainingaccuracy <- function(f, test, d, D) {
   res <- dx - fits
   n <- length(res)
   if (is.null(test) && n > 0) {
-    test <- seq(n)
+    test <- seq_len(n)
   }
   if (min(test) < 1 || max(test) > n) {
     warning("test elements must be within sample")

@@ -1103,7 +1103,7 @@ initstate <- function(y, trendtype, seasontype) {
     b0 <- NULL
   } else {
     # Simple linear regression on seasonally adjusted data
-    fit <- lsfit(seq(maxn), head(y.sa, maxn))
+    fit <- lsfit(seq_len(maxn), head(y.sa, maxn))
     if (trendtype == "A") {
       l0 <- fit$coefficients[1]
       b0 <- fit$coefficients[2]

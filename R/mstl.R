@@ -26,7 +26,7 @@ mstl <- function(
   lambda = NULL,
   biasadj = FALSE,
   iterate = 2,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   ...
 ) {
   # What is x?
@@ -444,7 +444,7 @@ rowSumsTS <- function(mts) {
 #' @export
 stlm <- function(
   y,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   t.window = NULL,
   robust = FALSE,
   method = c("ets", "arima"),
@@ -665,7 +665,7 @@ forecast.stlm <- function(
 stlf <- function(
   y,
   h = frequency(x) * 2,
-  s.window = 7 + 4 * seq(6),
+  s.window = 7 + 4 * seq_len(6),
   t.window = NULL,
   robust = FALSE,
   lambda = NULL,

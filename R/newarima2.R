@@ -1347,7 +1347,7 @@ myarima <- function(
 newmodel <- function(p, d, q, P, D, Q, constant, results) {
   n <- nrow(results)
   for (i in seq_len(n)) {
-    if (!all(is.na(results[i, seq(7)]))) {
+    if (!all(is.na(results[i, seq_len(7)]))) {
       if (all(c(p, d, q, P, D, Q, constant) == results[i, 1:7])) {
         return(FALSE)
       }

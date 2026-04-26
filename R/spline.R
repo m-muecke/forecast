@@ -32,7 +32,7 @@ spline.matrices <- function(
   }
   nn <- n + n0
   Sigma <- make.Sigma(n, n0)
-  s <- cbind(rep(1, nn), seq(nn) / n)
+  s <- cbind(rep(1, nn), seq_len(nn) / n)
   Omega <- cc * s %*% t(s) + Sigma / beta + diag(nn)
   maxO <- max(Omega)
   if (compute_inverse) {
@@ -127,14 +127,14 @@ spline_model <- function(
         y = xx
       )$minimum
     # Compute spar which is equivalent to beta
-    r <- 256 * smooth.spline(seq(n), y, spar = 0)$lambda
+    r <- 256 * smooth.spline(seq_len(n), y, spar = 0)$lambda
     lss <- beta.est / (1 - 1 / n)^3
     spar <- (log(lss / r) / log(256) + 1) / 3
-    splinefit <- smooth.spline(seq(n), y, spar = spar)
+    splinefit <- smooth.spline(seq_len(n), y, spar = spar)
     sfits <- splinefit$y
   } else {
     # Use GCV
-    splinefit <- smooth.spline(seq(n), y, cv = FALSE, spar = NULL)
+    splinefit <- smooth.spline(seq_len(n), y, cv = FALSE, spar = NULL)
     sfits <- ts(splinefit$y)
     beta.est <- pmax(1e-7, splinefit$lambda * (1 - 1 / n)^3)
   }
@@ -150,8 +150,8 @@ spline_model <- function(
   } else {
     # This is probably grossly inefficient but I can't think of a better way
     for (i in seq_len(n - 1)) {
-      idx <- seq(i)
-      U <- mat$Omega[seq(i), i + 1]
+      idx <- seq_len(i)
+      U <- mat$Omega[seq_len(i), i + 1]
       Oinv <- solve(mat$Omega[idx, idx] / maxO, tol = 1e-10) / maxO
       yfit[i + 1] <- t(U) %*% Oinv %*% y[idx]
       sd <- sqrt(mat$Omega[i + 1, i + 1] - t(U) %*% Oinv %*% U)
@@ -248,8 +248,8 @@ forecast.spline_model <- function(
   newmat <- spline.matrices(n, object$beta / n^3, n0 = h, compute_inverse = FALSE)
 
   # Compute mean and var of forecasts
-  U <- newmat$Omega[seq(n), n + seq(h)]
-  Omega0 <- newmat$Omega[n + seq(h), n + seq(h)]
+  U <- newmat$Omega[seq_len(n), n + seq_len(h)]
+  Omega0 <- newmat$Omega[n + seq_len(h), n + seq_len(h)]
   Yhat <- t(U) %*% mat$inv.Omega %*% y
   sd <- sqrt(object$sigma2 * diag(Omega0 - t(U) %*% mat$inv.Omega %*% U))
 
@@ -405,17 +405,17 @@ simulate.spline_model <- function(
   if (future) {
     y <- tail(y, nhistory)
   } else {
-    y <- object$y[sample(nhistory - length(object$y)) + seq(nhistory)]
+    y <- object$y[sample(nhistory - length(object$y)) + seq_len(nhistory)]
   }
   y <- c(y, rep(NA_real_, nsim))
-  for (i in nhistory + seq(nsim) - 1) {
+  for (i in nhistory + seq_len(nsim) - 1) {
     mat <- spline.matrices(i, object$beta / i^3, compute_P = FALSE)
     newmat <- spline.matrices(i, object$beta / i^3, n0 = 1, compute_inverse = FALSE)
     inv.Omega <- mat$inv.Omega
     Omega <- newmat$Omega
-    U <- Omega[seq(i), i + 1]
+    U <- Omega[seq_len(i), i + 1]
     Omega0 <- Omega[i + 1, i + 1]
-    Yhat <- t(U) %*% inv.Omega %*% y[seq(i)]
+    Yhat <- t(U) %*% inv.Omega %*% y[seq_len(i)]
     sd <- sqrt(Omega0 - t(U) %*% inv.Omega %*% U)
     y[i + 1] <- Yhat + e[i - nhistory + 1] * sd
   }
