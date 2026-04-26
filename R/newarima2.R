@@ -1309,7 +1309,7 @@ myarima <- function(
     return(structure(fit, class = c("fc_model", "forecast_ARIMA", "ARIMA", "Arima")))
   } else {
     # Catch errors due to unused arguments
-    if (length(grep("unused argument", fit, fixed = TRUE)) > 0L) {
+    if (any(grepl("unused argument", fit, fixed = TRUE))) {
       stop(fit[1])
     }
 
