@@ -20,12 +20,7 @@ lpb <- function(x, nsim = 100) {
   meanx <- mean(x)
   y <- x - meanx
   gamma <- wacf(y, lag.max = n)$acf[,, 1]
-  s <- length(gamma)
-  Gamma <- matrix(1, s, s)
-  d <- row(Gamma) - col(Gamma)
-  for (i in seq_len(s - 1)) {
-    Gamma[d == i | d == (-i)] <- gamma[i + 1]
-  }
+  Gamma <- toeplitz(gamma)
   L <- t(chol(Gamma))
   W <- solve(L, y)
   out <- ts(

@@ -351,13 +351,9 @@ wacf <- function(x, lag.max = length(x) - 1) {
   # Construct covariance matrix
   gamma <- acfest$acf[,, 1]
   s <- length(gamma)
-  Gamma <- matrix(1, s, s)
-  d <- row(Gamma) - col(Gamma)
-  for (i in seq_len(s - 1)) {
-    Gamma[d == i | d == (-i)] <- gamma[i + 1]
-  }
+  Gamma <- toeplitz(gamma)
   # Compute eigenvalue decomposition
-  ei <- eigen(Gamma)
+  ei <- eigen(Gamma, symmetric = TRUE)
   # Shrink eigenvalues
   d <- pmax(ei$values, 20 / n)
   # Construct new covariance matrix
