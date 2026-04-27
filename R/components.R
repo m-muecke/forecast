@@ -113,11 +113,9 @@ seasextract_w_na_action <- function(x, name) {
     return(NULL)
   }
   z <- na.omit(x$data[, name])
-  if (!is.null(x$na.action)) {
-    if (attr(x$na.action, "class") == "exclude") {
-      z <- ts(stats::napredict(x$na.action, z))
-      tsp(z) <- tsp(x$x)
-    }
+  if (inherits(x$na.action, "exclude")) {
+    z <- ts(stats::napredict(x$na.action, z))
+    tsp(z) <- tsp(x$x)
   }
   z
 }
