@@ -22,6 +22,7 @@ thetaf(
   fan = FALSE,
   lambda = NULL,
   biasadj = FALSE,
+  type = c("multiplicative", "additive"),
   x = y,
   ...
 )

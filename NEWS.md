@@ -1,6 +1,7 @@
 # forecast (development version)
 
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
+* `theta_model()` and `thetaf()` gained a `type` argument to select additive or multiplicative seasonal decomposition.
 
 # forecast 9.0.2
 

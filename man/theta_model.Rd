@@ -4,7 +4,12 @@
 \alias{theta_model}
 \title{Theta model}
 \usage{
-theta_model(y, lambda = NULL, biasadj = FALSE)
+theta_model(
+  y,
+  lambda = NULL,
+  biasadj = FALSE,
+  type = c("multiplicative", "additive")
+)
 }
 \arguments{
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
@@ -19,6 +24,8 @@ transformations. If transformed data is used to produce forecasts and fitted
 values, a regular back transformation will result in median forecasts. If
 biasadj is \code{TRUE}, an adjustment will be made to produce mean forecasts
 and fitted values.}
+
+\item{type}{Type of seasonal decomposition. Either \code{"multiplicative"} (default) or \code{"additive"}.}
 }
 \value{
 An object of class \code{theta_model}.
