@@ -23,6 +23,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Rob Hyndman \email{Rob.Hyndman@monash.edu} (\href{https://orcid.org/0000-0002-2140-5352}{ORCID}) [copyright holder]
   \item George Athanasopoulos (\href{https://orcid.org/0000-0002-5389-2802}{ORCID})
   \item Christoph Bergmeir (\href{https://orcid.org/0000-0002-3665-9021}{ORCID})
   \item Gabriel Caceres (\href{https://orcid.org/0000-0002-2947-2023}{ORCID})

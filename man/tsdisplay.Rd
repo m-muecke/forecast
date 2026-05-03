@@ -47,7 +47,7 @@ value is selected by default if the argument is missing.}
 
 \item{na.action}{function to handle missing values in acf, pacf and spectrum
 calculations. The default is \code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful
-alternatives are \code{\link[stats:na.fail]{stats::na.pass()}} and \code{\link[=na.interp]{na.interp()}}.}
+alternatives are \code{\link[stats:na.pass]{stats::na.pass()}} and \code{\link[=na.interp]{na.interp()}}.}
 
 \item{theme}{Adds a ggplot element to each plot, typically a theme.}
 

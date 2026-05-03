@@ -63,7 +63,7 @@ means and dividing by their respective standard deviations. If \code{lambda}
 is not \code{NULL}, scaling is applied after Box-Cox transformation.}
 
 \item{parallel}{If \code{TRUE}, then the specification search is done in parallel
-via \code{\link[parallel:clusterApply]{parallel::parLapply()}}. This can give a significant speedup on
+via \code{\link[parallel:parLapply]{parallel::parLapply()}}. This can give a significant speedup on
 multicore machines.}
 
 \item{num.cores}{Allows the user to specify the amount of parallel processes

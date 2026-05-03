@@ -20,7 +20,7 @@ period in a major financial center.
 }
 \details{
 Useful for trading days length adjustments. More on how to define "business
-days", please refer to \code{\link[timeDate:calendar-isBizday]{timeDate::isBizday()}}.
+days", please refer to \code{\link[timeDate:isBizday]{timeDate::isBizday()}}.
 }
 \examples{
 

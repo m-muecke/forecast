@@ -55,7 +55,7 @@ seas(USAccDeaths) |> autoplot()
 }
 \seealso{
 \code{\link[seasonal:seas]{seasonal::seas()}}, \code{\link[stats:stl]{stats::stl()}}, \code{\link[stats:decompose]{stats::decompose()}},
-\code{\link[stats:StructTS]{stats::StructTS()}}, \code{\link[stats:stlmethods]{stats::plot.stl()}}.
+\code{\link[stats:StructTS]{stats::StructTS()}}, \code{\link[stats:plot.stl]{stats::plot.stl()}}.
 }
 \author{
 Mitchell O'Hara-Wild

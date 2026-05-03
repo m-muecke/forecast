@@ -44,7 +44,7 @@ data should be plotted on the right.}
 \item{year.labels.left}{Logical flag indicating whether labels for each year
 of data should be plotted on the left.}
 
-\item{type}{plot type (as for \code{\link[graphics:plot.default]{graphics::plot()}}). Not yet
+\item{type}{plot type (as for \code{\link[graphics:plot]{graphics::plot()}}). Not yet
 supported for ggseasonplot.}
 
 \item{col}{Colour}
@@ -56,7 +56,7 @@ discrete?}
 
 \item{labelgap}{Distance between year labels and plotted lines}
 
-\item{...}{additional arguments to \code{\link[graphics:plot.default]{graphics::plot()}}.}
+\item{...}{additional arguments to \code{\link[graphics:plot]{graphics::plot()}}.}
 
 \item{s}{seasonal frequency of x.}
 

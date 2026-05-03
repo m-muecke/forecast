@@ -66,7 +66,7 @@ values are \code{"correlation"} (the default), \code{"covariance"} or \code{"par
 ccf is plotted.}
 
 \item{na.action}{Function to handle missing values. Default is
-\code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful alternatives are \code{\link[stats:na.fail]{stats::na.pass()}} and
+\code{\link[stats:na.contiguous]{stats::na.contiguous()}}. Useful alternatives are \code{\link[stats:na.pass]{stats::na.pass()}} and
 \code{\link[=na.interp]{na.interp()}}.}
 
 \item{demean}{Should covariances be about the sample means?}
@@ -98,7 +98,7 @@ autocorrelation function of a (possibly multivariate) time series. Function
 univariate series.
 }
 \details{
-The functions improve the \code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:acf]{stats::pacf()}} and \code{\link[stats:acf]{stats::ccf()}}
+The functions improve the \code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:pacf]{stats::pacf()}} and \code{\link[stats:ccf]{stats::ccf()}}
 functions. The main differences are that \code{Acf} does not plot a spike at lag
 0 when \code{type = "correlation"} (which is redundant) and the horizontal axes
 show lags in time units rather than seasonal units.
@@ -127,7 +127,7 @@ autocovariance matrices and the linear process bootstrap. \emph{Journal of
 Time Series Analysis}, 31(6), 471-482.
 }
 \seealso{
-\code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:acf]{stats::pacf()}}, \code{\link[stats:acf]{stats::ccf()}}, \code{\link[=tsdisplay]{tsdisplay()}}
+\code{\link[stats:acf]{stats::acf()}}, \code{\link[stats:pacf]{stats::pacf()}}, \code{\link[stats:ccf]{stats::ccf()}}, \code{\link[=tsdisplay]{tsdisplay()}}
 }
 \author{
 Rob J Hyndman

@@ -152,7 +152,7 @@ Returns a time series based on the model object \code{object}.
 \details{
 With \code{simulate.Arima()}, the \code{object} should be produced by \code{\link[=Arima]{Arima()}} or
 \code{\link[=auto.arima]{auto.arima()}}, rather than \code{\link[stats:arima]{stats::arima()}}. By default, the error series
-is assumed normally distributed and generated using \code{\link[stats:Normal]{stats::rnorm()}}. If
+is assumed normally distributed and generated using \code{\link[stats:rnorm]{stats::rnorm()}}. If
 \code{innov} is present, it is used instead. If \code{bootstrap = TRUE} and
 \code{innov = NULL}, the residuals are resampled instead.
 
