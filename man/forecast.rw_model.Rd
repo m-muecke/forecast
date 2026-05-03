@@ -138,7 +138,7 @@ Forecast standard errors allow for uncertainty in estimating the drift parameter
 (unlike the corresponding forecasts obtained by fitting an ARIMA model
 directly).
 
-The generic accessor functions \code{\link[stats:fitted.values]{stats::fitted()}} and \code{\link[stats:residuals]{stats::residuals()}}
+The generic accessor functions \code{\link[stats:fitted]{stats::fitted()}} and \code{\link[stats:residuals]{stats::residuals()}}
 extract useful features of the object returned.
 }
 \section{forecast class}{

@@ -53,6 +53,8 @@ and fitted values.}
 
 \item{y}{a numeric vector or univariate time series of class \code{ts}}
 
+\item{type}{Type of seasonal decomposition. Either \code{"multiplicative"} (default) or \code{"additive"}.}
+
 \item{x}{Deprecated. Included for backwards compatibility.}
 }
 \value{

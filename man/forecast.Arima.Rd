@@ -100,8 +100,8 @@ An object of class \code{forecast}.
 Returns forecasts and other information for univariate ARIMA models.
 }
 \details{
-For \code{Arima} or \code{ar} objects, the function calls \code{\link[stats:predict.arima]{stats::predict.Arima()}} or
-\link[stats:ar]{stats::predict.ar} and constructs an object of class \code{forecast} from the
+For \code{Arima} or \code{ar} objects, the function calls \code{\link[stats:predict.Arima]{stats::predict.Arima()}} or
+\link[stats:predict.ar]{stats::predict.ar} and constructs an object of class \code{forecast} from the
 results. For \code{fracdiff} objects, the calculations are all done within
 \code{\link[fracdiff:fracdiff]{fracdiff::fracdiff()}} using the equations given by Peiris and Perera (1988).
 }
@@ -143,7 +143,7 @@ differenced ARIMA models, \emph{Journal of Time Series Analysis},
 \bold{9}(3), 215-220.
 }
 \seealso{
-\code{\link[stats:predict.arima]{stats::predict.Arima()}}, \code{\link[stats:ar]{stats::predict.ar()}}, \code{\link[=auto.arima]{auto.arima()}},
+\code{\link[stats:predict.Arima]{stats::predict.Arima()}}, \code{\link[stats:predict.ar]{stats::predict.ar()}}, \code{\link[=auto.arima]{auto.arima()}},
 \code{\link[=Arima]{Arima()}}, \code{\link[stats:arima]{stats::arima()}}, \code{\link[stats:ar]{stats::ar()}}, \code{\link[=arfima]{arfima()}}.
 }
 \author{

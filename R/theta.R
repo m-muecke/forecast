@@ -142,6 +142,7 @@ print.theta_model <- function(
 #'
 #' @param object An object of class `theta_model` created by [theta_model()].
 #' @inheritParams ses
+#' @param type Type of seasonal decomposition. Either `"multiplicative"` (default) or `"additive"`.
 #' @return An object of class `forecast`.
 #' @inheritSection forecast.ts forecast class
 #' @author Rob J Hyndman

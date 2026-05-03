@@ -71,7 +71,7 @@ Hylleberg S, Engle R, Granger C and Yoo B (1990) "Seasonal integration
 and cointegration.", \emph{Journal of Econometrics} \bold{44}(1), pp. 215-238.
 }
 \seealso{
-\code{\link[=auto.arima]{auto.arima()}}, \code{\link[=ndiffs]{ndiffs()}}, \code{\link[=ocsb.test]{ocsb.test()}}, \code{\link[uroot:hegy-test]{uroot::hegy.test()}}, and \code{\link[uroot:ch-test]{uroot::ch.test()}}
+\code{\link[=auto.arima]{auto.arima()}}, \code{\link[=ndiffs]{ndiffs()}}, \code{\link[=ocsb.test]{ocsb.test()}}, \code{\link[uroot:hegy.test]{uroot::hegy.test()}}, and \code{\link[uroot:ch.test]{uroot::ch.test()}}
 }
 \author{
 Rob J Hyndman, Slava Razbash and Mitchell O'Hara-Wild
