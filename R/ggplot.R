@@ -2601,7 +2601,7 @@ GeomForecast <- ggplot2::ggproto(
         height = grid::unit(1, "npc") - grid::unit(lwd, "mm"),
         gp = grid::gpar(
           col = fillcol,
-          fill = scales::alpha(fillcol, data$alpha),
+          fill = ggplot2::alpha(fillcol, data$alpha),
           lty = data$linetype,
           lwd = lwd * ggplot2::.pt,
           linejoin = "mitre"
@@ -2612,7 +2612,7 @@ GeomForecast <- ggplot2::ggproto(
         y = c(0.2, 0.6, 0.4, 0.9),
         gp = grid::gpar(
           col = linecol,
-          fill = scales::alpha(linecol, data$alpha),
+          fill = ggplot2::alpha(linecol, data$alpha),
           lty = data$linetype,
           lwd = lwd * ggplot2::.pt,
           linejoin = "mitre"
