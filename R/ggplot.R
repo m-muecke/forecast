@@ -1072,7 +1072,7 @@ ggtsdisplay <- function(
   plot.type = c("partial", "histogram", "scatter", "spectrum"),
   points = TRUE,
   smooth = FALSE,
-  lag.max,
+  lag.max = NULL,
   na.action = na.contiguous,
   theme = NULL,
   ...
@@ -1086,7 +1086,7 @@ ggtsdisplay <- function(
   if (!is.ts(x)) {
     x <- ts(x)
   }
-  if (missing(lag.max)) {
+  if (is.null(lag.max)) {
     lag.max <- round(min(
       max(10 * log10(length(x)), 3 * frequency(x)),
       length(x) / 3
