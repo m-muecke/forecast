@@ -188,14 +188,14 @@ seasonplot <- function(
   year.labels = FALSE,
   year.labels.left = FALSE,
   type = "o",
-  main,
+  main = NULL,
   xlab = NULL,
   ylab = "",
   col = 1,
   labelgap = 0.1,
   ...
 ) {
-  if (missing(main)) {
+  if (is.null(main)) {
     main <- paste("Seasonal plot:", deparse1(substitute(x)))
   }
 
