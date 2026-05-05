@@ -89,7 +89,7 @@ forecast.tbats <- function(
     g = g,
     gammaBold = gamma.bold,
     alpha = object$alpha,
-    beta = object$beta.v
+    beta = object$beta
   )
 
   F <- makeTBATSFMatrix(
