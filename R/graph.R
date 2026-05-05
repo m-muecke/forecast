@@ -45,7 +45,7 @@ tsdisplay <- function(
   plot.type = c("partial", "histogram", "scatter", "spectrum"),
   points = TRUE,
   ci.type = c("white", "ma"),
-  lag.max,
+  lag.max = NULL,
   na.action = na.contiguous,
   main = NULL,
   xlab = "",
@@ -66,7 +66,7 @@ tsdisplay <- function(
   if (!is.ts(x)) {
     x <- ts(x)
   }
-  if (missing(lag.max)) {
+  if (is.null(lag.max)) {
     lag.max <- round(min(
       max(10 * log10(length(x)), 3 * frequency(x)),
       length(x) / 3
