@@ -9,7 +9,7 @@ gghistogram(
   add.normal = FALSE,
   add.kde = FALSE,
   add.rug = TRUE,
-  bins,
+  bins = NULL,
   boundary = 0
 )
 }

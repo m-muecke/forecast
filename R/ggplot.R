@@ -2977,10 +2977,10 @@ gghistogram <- function(
   add.normal = FALSE,
   add.kde = FALSE,
   add.rug = TRUE,
-  bins,
+  bins = NULL,
   boundary = 0
 ) {
-  if (missing(bins)) {
+  if (is.null(bins)) {
     bins <- min(500, grDevices::nclass.FD(na.exclude(x)))
   }
   data <- data.frame(x = as.numeric(x), check.names = FALSE)
