@@ -241,7 +241,7 @@ CVar <- function(
   out$testfit <- ts(alltestfit)
   tsp(out$testfit) <- tsp(y)
 
-  out$residuals <- out$testfit - y
+  out$residuals <- y - out$testfit
   out$LBpvalue <- Box.test(out$residuals, type = "Ljung", lag = LBlags)$p.value
 
   out$k <- k
