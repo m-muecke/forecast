@@ -117,7 +117,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
       sum += state[i];
     }
 
-    double new_state = m * ((seasontype == 2) ? 1 : 0) - sum;
+    const double new_state = m * ((seasontype == 2) ? 1 : 0) - sum;
 
     state.push_back(new_state);
   }
@@ -138,7 +138,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
     }
   };
 
-  int p = state.size();
+  const int p = state.size();
 
   for (int i = 0; i <= p * this->y.size(); i++) state.push_back(0);
 
@@ -167,7 +167,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   } else if (this->opt_crit == "sigma") {
     double mean = 0;
-    int ne = e.size();
+    const int ne = e.size();
     for (int i = 0; i < ne; i++) {
       mean += e[i] * e[i] / ne;
     }
@@ -175,7 +175,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   } else if (this->opt_crit == "mae") {
     double mean = 0;
-    int ne = e.size();
+    const int ne = e.size();
     for (int i = 0; i < ne; i++) {
       mean += fabs(e[i]) / ne;
     }
@@ -221,7 +221,7 @@ bool EtsTargetFunction::admissible() {
     if (!optBeta && !givenBeta) beta = 0;
 
     // max(1-1/phi-alpha,0)
-    double d = 1 - 1 / phi - alpha;
+    const double d = 1 - 1 / phi - alpha;
     if (gamma < ((d > 0) ? d : 0) || gamma > 1 + 1 / phi - alpha)
       return false;
 
@@ -255,7 +255,7 @@ bool EtsTargetFunction::admissible() {
 
     double max = 0;
     for (int i = 0; i < zeror.size(); i++) {
-      double abs_val = sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
+      const double abs_val = sqrt(zeror[i] * zeror[i] + zeroi[i] * zeroi[i]);
       if (abs_val > max) max = abs_val;
     }
 

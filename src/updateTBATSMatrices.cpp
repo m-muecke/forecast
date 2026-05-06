@@ -35,7 +35,7 @@ void updateTBATSGMatrix(arma::mat &g,
   }
 
   if (gammaBold.isNotNull()) {
-    arma::mat gb = as<arma::mat>(gammaBold);
+    const arma::mat gb = as<arma::mat>(gammaBold);
     g.submat(adjBeta + 1, 0, adjBeta + gb.n_cols, 0) = gb.t();
   }
 }

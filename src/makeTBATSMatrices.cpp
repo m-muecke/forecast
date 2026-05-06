@@ -90,7 +90,7 @@ arma::mat makeSIMatrix(int k, double m) {
   arma::mat S(k, k, arma::fill::zeros);
 
   for (int j = 1; j <= k; j++) {
-    double lambda = (2 * pi * j) / m;
+    const double lambda = (2 * pi * j) / m;
     S(j - 1, j - 1) = std::sin(lambda);
   }
   return S;
