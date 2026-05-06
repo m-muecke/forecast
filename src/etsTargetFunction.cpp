@@ -142,10 +142,11 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   for (int i = 0; i <= p * this->y.size(); i++) state.push_back(0);
 
-  etscalc_internal(&this->y[0], this->n, &this->state[0], this->m,
+  etscalc_internal(this->y.data(), this->n, this->state.data(), this->m,
                    this->errortype, this->trendtype, this->seasontype,
-                   this->alpha, this->beta, this->gamma, this->phi, &this->e[0],
-                   &this->fits[0], &this->lik, &this->amse[0], this->nmse);
+                   this->alpha, this->beta, this->gamma, this->phi,
+                   this->e.data(), this->fits.data(), &this->lik,
+                   this->amse.data(), this->nmse);
 
   // Avoid perfect fits
   if (this->lik < -1e10) this->lik = -1e10;
@@ -251,7 +252,8 @@ bool EtsTargetFunction::admissible() {
 
     bool fail;
 
-    R_cpolyroot(&opr[0], &opi[0], &degree, &zeror[0], &zeroi[0], &fail);
+    R_cpolyroot(opr.data(), opi.data(), &degree, zeror.data(), zeroi.data(),
+                &fail);
 
     double max = 0;
     for (int i = 0; i < zeror.size(); i++) {
