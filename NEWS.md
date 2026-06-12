@@ -2,6 +2,7 @@
 
 * `auto.arima()` now truncates `xreg` together with the series when `approximation = TRUE` and `truncate` is set, so model selection no longer fails.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
+* `bats()` now applies the proposed seasonal smoothing parameters to every seasonal period when evaluating the likelihood during optimization. Previously, for models with multiple seasonal periods and ARMA errors, all but the first seasonal period kept their starting values in the transition matrix, so parameter estimates and AIC-based model selection were based on a mis-specified likelihood.
 * `bld.mbb.bootstrap()` no longer errors when `num = 1` and now validates that `num` is a positive integer.
 * `forecast.Arima()` now correctly passes `xreg` when `bootstrap = TRUE` (#1115).
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.

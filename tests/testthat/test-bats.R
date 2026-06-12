@@ -11,6 +11,22 @@ test_that("tests for a non-ts object", {
   expect_equal(bats(-1, use.box.cox = TRUE, use.parallel = FALSE)$AIC, -Inf)
 })
 
+test_that("updateGMatrix updates gamma.bold for all seasonal periods", {
+  # two seasonal periods c(2, 3): tau = 5, gamma.bold layout (g1, 0, g2, 0, 0)
+  g <- matrix(0, nrow = 6, ncol = 1)
+  gamma.bold <- matrix(0, nrow = 1, ncol = 5)
+  forecast:::updateGMatrix(
+    g = g,
+    gammaBold = gamma.bold,
+    alpha = 0.1,
+    beta = NULL,
+    gammaVector = c(0.2, 0.3),
+    seasonalPeriods = c(2L, 3L)
+  )
+  expect_identical(g[, 1], c(0.1, 0.2, 0, 0.3, 0, 0))
+  expect_identical(gamma.bold[1, ], c(0.2, 0, 0.3, 0, 0))
+})
+
 test_that("Test parallel of bats", {
   abc <- rnorm(50, 5, 1)
   skip_on_cran()
