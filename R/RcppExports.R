@@ -45,8 +45,8 @@ makeSIMatrix <- function(k, m) {
     .Call(`_forecast_makeSIMatrix`, k, m)
 }
 
-makeAIMatrix <- function(C, S, k) {
-    .Call(`_forecast_makeAIMatrix`, C, S, k)
+makeAIMatrix <- function(C, S) {
+    .Call(`_forecast_makeAIMatrix`, C, S)
 }
 
 updateFMatrix <- function(F, smallPhi, alpha, beta, gammaBold, ar, ma, tau) {

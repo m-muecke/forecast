@@ -89,11 +89,7 @@ makeTBATSFMatrix <- function(
       # }
       # print(C)
       # print(S)
-      Ai <- makeAIMatrix(
-        C = C,
-        S = S,
-        k = as.integer(k.vector[i])
-      )
+      Ai <- makeAIMatrix(C = C, S = S)
       A[
         (last.pos + 1):(last.pos + (2 * k.vector[i])),
         (last.pos + 1):(last.pos + (2 * k.vector[i]))

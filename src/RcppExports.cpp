@@ -202,15 +202,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // makeAIMatrix
-arma::mat makeAIMatrix(const arma::mat& C, const arma::mat& S, int k);
-RcppExport SEXP _forecast_makeAIMatrix(SEXP CSEXP, SEXP SSEXP, SEXP kSEXP) {
+arma::mat makeAIMatrix(const arma::mat& C, const arma::mat& S);
+RcppExport SEXP _forecast_makeAIMatrix(SEXP CSEXP, SEXP SSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type C(CSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type S(SSEXP);
-    Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(makeAIMatrix(C, S, k));
+    rcpp_result_gen = Rcpp::wrap(makeAIMatrix(C, S));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -305,7 +304,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_forecast_makeTBATSWMatrix", (DL_FUNC) &_forecast_makeTBATSWMatrix, 5},
     {"_forecast_makeCIMatrix", (DL_FUNC) &_forecast_makeCIMatrix, 2},
     {"_forecast_makeSIMatrix", (DL_FUNC) &_forecast_makeSIMatrix, 2},
-    {"_forecast_makeAIMatrix", (DL_FUNC) &_forecast_makeAIMatrix, 3},
+    {"_forecast_makeAIMatrix", (DL_FUNC) &_forecast_makeAIMatrix, 2},
     {"_forecast_updateFMatrix", (DL_FUNC) &_forecast_updateFMatrix, 8},
     {"_forecast_updateWtransposeMatrix", (DL_FUNC) &_forecast_updateWtransposeMatrix, 7},
     {"_forecast_updateGMatrix", (DL_FUNC) &_forecast_updateGMatrix, 6},

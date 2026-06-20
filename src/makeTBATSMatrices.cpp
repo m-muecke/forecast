@@ -86,13 +86,6 @@ arma::mat makeSIMatrix(int k, double m) {
 }
 
 // [[Rcpp::export]]
-arma::mat makeAIMatrix(const arma::mat &C, const arma::mat &S, int k) {
-  arma::mat A(k * 2, k * 2);
-
-  A.submat(0, 0, k - 1, k - 1) = C;
-  A.submat(0, k, k - 1, k * 2 - 1) = S;
-  A.submat(k, 0, k * 2 - 1, k - 1) = -S;
-  A.submat(k, k, k * 2 - 1, k * 2 - 1) = C;
-
-  return A;
+arma::mat makeAIMatrix(const arma::mat &C, const arma::mat &S) {
+  return arma::join_cols(arma::join_rows(C, S), arma::join_rows(-S, C));
 }
