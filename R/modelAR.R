@@ -521,6 +521,9 @@ residuals.modelAR <- function(
   type <- match.arg(type)
   if (type == "innovation" && !is.null(object$lambda)) {
     res <- object$residuals
+    if (!is.null(object$scalex$scale)) {
+      res <- res * object$scalex$scale
+    }
   } else {
     res <- y - fitted(object, h = h)
   }
