@@ -1017,7 +1017,7 @@ autoplot.mforecast <- function(
         )
     }
     p <- p + ggAddExtras(ylab = NULL)
-    return(p)
+    p
   } else {
     # lm forecasts
     K <- length(object$forecast)
@@ -1358,7 +1358,7 @@ gglagplot <- function(
       labels$series <- as.character(labels$series)
     }
     labels$lagVal <- paste("lag", labels$lagVal)
-    return(labels)
+    labels
   }
   if (NCOL(x) > 1) {
     p <- p +
@@ -2428,7 +2428,7 @@ fortify.ts <- function(model, data, ...) {
       Data = as.numeric(model),
       check.names = FALSE
     )
-    return(ggplot2::fortify(model))
+    ggplot2::fortify(model)
   } else {
     model <- cbind(x = as.numeric(time(model)), y = as.numeric(model))
     as.data.frame(model)
@@ -2790,7 +2790,7 @@ GeomForecastInterval <- ggplot2::ggproto(
           )
         }
         # Create grob
-        return(GeomForecastIntervalGeom(x, panel_scales, coord)) ## Create list pair with average ymin/ymax to order layers
+        GeomForecastIntervalGeom(x, panel_scales, coord) ## Create list pair with average ymin/ymax to order layers
       }
     )
 

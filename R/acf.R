@@ -135,9 +135,9 @@ Acf <- function(
         axis(at = 0, side = 1)
       }
     }
-    return(invisible(acf.out))
+    invisible(acf.out)
   } else {
-    return(acf.out)
+    acf.out
   }
 }
 
@@ -213,7 +213,7 @@ seasonalaxis <- function(frequency, nlags, type, plot = TRUE) {
       axis(1, at = out2, tcl = -0.2, labels = FALSE)
     }
   } else {
-    return(out)
+    out
   }
 }
 
@@ -255,9 +255,9 @@ Pacf <- function(
     } else {
       seasonalaxis(frequency(x), nlags, type = "acf")
     }
-    return(invisible(object))
+    invisible(object)
   } else {
-    return(object)
+    object
   }
 }
 
@@ -296,9 +296,9 @@ Ccf <- function(
     ccf.out$snames <- paste(vnames, collapse = " & ")
     plot(ccf.out, ylab = "CCF", xaxt = "n", ...)
     seasonalaxis(frequency(x), nlags, type = "ccf")
-    return(invisible(ccf.out))
+    invisible(ccf.out)
   } else {
-    return(ccf.out)
+    ccf.out
   }
 }
 
@@ -451,13 +451,12 @@ taperedacf <- function(
   }
   out <- structure(out, class = "mpacf")
 
-  if (!plot) {
-    return(out)
-  } else {
+  if (plot) {
     plot(out, ...)
-    return(invisible(out))
+    invisible(out)
+  } else {
+    out
   }
-  out
 }
 
 #' @rdname Acf

@@ -579,9 +579,9 @@ simulate.ar <- function(
     stop("Length of innov must be equal to nsim")
   }
   if (future) {
-    return(myarima.sim(model, nsim, x = object$x, e = e) + x.mean)
+    myarima.sim(model, nsim, x = object$x, e = e) + x.mean
   } else {
-    return(arima.sim(model, nsim, innov = e) + x.mean)
+    arima.sim(model, nsim, innov = e) + x.mean
   }
 }
 

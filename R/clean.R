@@ -114,9 +114,9 @@ na.interp <- function(
       (max(x) > rangex[2L] + 0.5 * drangex ||
         min(x) < rangex[1L] - 0.5 * drangex)
   ) {
-    return(na.interp(origx, lambda = lambda, linear = TRUE))
+    na.interp(origx, lambda = lambda, linear = TRUE)
   } else {
-    return(x)
+    x
   }
 }
 

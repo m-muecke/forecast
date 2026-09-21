@@ -134,10 +134,10 @@ tsCV <- function(
     }
   }
   if (h == 1) {
-    return(e[, 1L])
+    e[, 1L]
   } else {
     colnames(e) <- paste0("h=", 1:h)
-    return(e)
+    e
   }
 }
 

@@ -166,13 +166,13 @@ seasonaldummy <- function(x, h = NULL) {
       paste0("S", 1:(fr.x - 1))
     }
 
-    return(dummy.mat)
+    dummy.mat
   } else {
-    return(seasonaldummy(ts(
+    seasonaldummy(ts(
       rep(0, h),
       start = tsp(x)[2] + 1 / fr.x,
       frequency = fr.x
-    )))
+    ))
   }
 }
 

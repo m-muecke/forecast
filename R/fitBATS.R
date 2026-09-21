@@ -657,9 +657,9 @@ calcLikelihood <- function(
       bc.upper = bc.upper
     )
   ) {
-    return(log.likelihood)
+    log.likelihood
   } else {
-    return(10^20)
+    10^20
   }
 }
 
@@ -802,8 +802,8 @@ calcLikelihoodNOTransformed <- function(
       tau = tau
     )
   ) {
-    return(log.likelihood)
+    log.likelihood
   } else {
-    return(10^20)
+    10^20
   }
 }

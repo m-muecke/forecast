@@ -27,9 +27,9 @@ getResponse.default <- function(object, ...) {
     if (is.null(output)) {
       output <- object$y
     }
-    return(output)
+    output
   } else {
-    return(NULL)
+    NULL
   }
 }
 

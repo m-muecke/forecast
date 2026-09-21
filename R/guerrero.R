@@ -129,8 +129,8 @@ BoxCox.lambda <- function(
   #   stop("All values must be positive")
   method <- match.arg(method)
   if (method == "loglik") {
-    return(bcloglik(x, lower, upper))
+    bcloglik(x, lower, upper)
   } else {
-    return(guerrero(x, lower, upper))
+    guerrero(x, lower, upper)
   }
 }

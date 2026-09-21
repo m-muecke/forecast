@@ -716,9 +716,9 @@ calcLikelihoodTBATS <- function(
       bc.upper = bc.upper
     )
   ) {
-    return(log.likelihood)
+    log.likelihood
   } else {
-    return(Inf)
+    Inf
   }
 }
 
@@ -831,8 +831,8 @@ calcLikelihoodNOTransformedTBATS <- function(
       tau = tau
     )
   ) {
-    return(log.likelihood)
+    log.likelihood
   } else {
-    return(Inf)
+    Inf
   }
 }
