@@ -233,7 +233,7 @@ ets <- function(
           model$fitted,
           lambda,
           biasadj,
-          var(model$residuals)
+          var(model$residuals, na.rm = TRUE)
         )
       }
       model$lambda <- lambda

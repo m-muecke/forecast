@@ -54,3 +54,8 @@ test_that("rwf with lambda", {
   expect_s3_class(fc, "forecast")
   expect_false(is.null(fc$lambda))
 })
+
+test_that("rwf with biasadj only has a missing first fitted value", {
+  fc <- rwf(AirPassengers, lambda = 0, biasadj = TRUE)
+  expect_identical(which(is.na(fitted(fc))), 1L)
+})

@@ -194,7 +194,12 @@ HoltWintersZZ <- function(
   fitted <- ts(final.fit$fitted, frequency = tspx[3], start = tspx[1])
   res <- ts(final.fit$residuals, frequency = tspx[3], start = tspx[1])
   if (!is.null(lambda)) {
-    fitted <- InvBoxCox(fitted, lambda, biasadj, var(final.fit$residuals))
+    fitted <- InvBoxCox(
+      fitted,
+      lambda,
+      biasadj,
+      var(final.fit$residuals, na.rm = TRUE)
+    )
   }
   states <- matrix(final.fit$level, ncol = 1)
   colnames(states) <- "l"

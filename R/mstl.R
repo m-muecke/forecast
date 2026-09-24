@@ -552,7 +552,7 @@ stlm <- function(
   fits <- fitted(fit) + allseas
   res <- residuals(fit)
   if (!is.null(lambda)) {
-    fits <- InvBoxCox(fits, lambda, biasadj, var(res))
+    fits <- InvBoxCox(fits, lambda, biasadj, var(res, na.rm = TRUE))
   }
 
   structure(

@@ -214,7 +214,12 @@ arfima <- function(
   fit$residuals <- undo.na.ends(x, residuals(fit))
   fit$fitted <- x - fit$residuals
   if (!is.null(lambda)) {
-    fit$fitted <- InvBoxCox(fit$fitted, lambda, biasadj, var(fit$residuals))
+    fit$fitted <- InvBoxCox(
+      fit$fitted,
+      lambda,
+      biasadj,
+      var(fit$residuals, na.rm = TRUE)
+    )
   }
   fit$lambda <- lambda
   fit$call <- match.call()
