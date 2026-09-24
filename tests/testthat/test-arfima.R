@@ -15,6 +15,12 @@ test_that("test accuracy(), fitted(), and residuals().", {
   expect_equal(mean(residuals(arfima1)), accuracy(arfima1)[, "ME"])
 })
 
+test_that("arfima() reuses lambda and biasadj from model", {
+  refit <- arfima(WWWusage, model = arfimabc2)
+  expect_identical(refit$lambda, arfimabc2$lambda)
+  expect_equal(forecast(refit)$mean, forecast(arfimabc2)$mean)
+})
+
 test_that("test forecast.fracdiff()", {
   expect_identical(
     forecast(arfima1, fan = TRUE)$mean,

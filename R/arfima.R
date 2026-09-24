@@ -126,6 +126,13 @@ arfima <- function(
   estim <- match.arg(estim)
   seriesname <- deparse1(substitute(y))
 
+  if (!is.null(model) && is.null(lambda)) {
+    lambda <- model$lambda
+    if (!is.null(attr(lambda, "biasadj"))) {
+      biasadj <- attr(lambda, "biasadj")
+    }
+  }
+
   orig.x <- x
   if (!is.null(lambda)) {
     x <- BoxCox(x, lambda)
