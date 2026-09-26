@@ -37,6 +37,7 @@
   shadecols = c("#596DD5", "#D5DBFF"),
   fcol = "#0000AA",
   flwd = 0.5,
+  showgap = TRUE,
   ...
 )
 

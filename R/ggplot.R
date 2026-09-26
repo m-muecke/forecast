@@ -784,6 +784,7 @@ autoplot.forecast <- function(
   shadecols = c("#596DD5", "#D5DBFF"),
   fcol = "#0000AA",
   flwd = 0.5,
+  showgap = TRUE,
   ...
 ) {
   if (!is.forecast(object)) {
@@ -950,7 +951,14 @@ autoplot.forecast <- function(
       ggplot2::labs(y = vars["yvar"], x = "Time")
 
     # Forecasted intervals
-    p <- p + autolayer(object, PI = PI, colour = fcol, size = flwd)
+    p <- p +
+      autolayer(
+        object,
+        PI = PI,
+        showgap = showgap,
+        colour = fcol,
+        size = flwd
+      )
   }
 
   p <- p + ggAddExtras(main = paste0("Forecasts from ", object$method))
