@@ -44,6 +44,13 @@ test_that("tests for fourierf", {
   expect_shape(fouriermat, dim = c(10, 8))
 })
 
+test_that("sindexf() continues the seasonal pattern of decompose()", {
+  dec <- decompose(wineind)
+  sf <- sindexf(dec, 15)
+  expect_equal(as.numeric(sf), rep_len(tail(dec$seasonal, 12), 15))
+  expect_equal(tsp(sf)[1], tsp(wineind)[2] + 1 / 12)
+})
+
 test_that("tests for stlm", {
   expect_warning(stlm(ts(rep(5, 24), frequency = 4), etsmodel = "ZZZ"))
 })

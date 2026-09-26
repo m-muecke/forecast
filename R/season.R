@@ -85,11 +85,9 @@ sindexf <- function(object, h) {
     ss <- ss[length(ss) - (m:1) + 1]
     tsp.x <- tsp(object$time.series)
   } else if (inherits(object, "decomposed.ts")) {
-    ss <- object$figure
-    m <- frequency(object$seasonal)
-    n <- length(object$trend)
-    ss <- rep_len(ss, n)
-    ss <- ss[n - (m:1) + 1]
+    ss <- object$seasonal
+    m <- frequency(ss)
+    ss <- ss[length(ss) - (m:1) + 1]
     tsp.x <- tsp(object$seasonal)
   } else {
     stop("Object of unknown class")
