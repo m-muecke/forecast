@@ -21,3 +21,10 @@ test_that("Test dshw()", {
   expect_error(dshw(x, period1 = 2, period2 = 2))
   expect_error(dshw(x, period1 = 2, period2 = 4.1))
 })
+
+test_that("dshw() errors on invalid forecast horizon", {
+  expect_snapshot(error = TRUE, {
+    dshw(taylor, h = 0)
+    dshw(taylor, h = 0.5)
+  })
+})

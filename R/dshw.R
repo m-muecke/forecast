@@ -92,12 +92,10 @@ dshw <- function(
     stop(
       "Error in dshw(): y must either be an msts object with two seasonal periods OR the seasonal periods should be specified with period1= and period2="
     )
-  } else {
-    if (period1 > period2) {
-      tmp <- period2
-      period2 <- period1
-      period1 <- tmp
-    }
+  } else if (period1 > period2) {
+    tmp <- period2
+    period2 <- period1
+    period1 <- tmp
   }
   if (!inherits(y, "msts")) {
     y <- msts(y, c(period1, period2))
@@ -105,6 +103,9 @@ dshw <- function(
 
   if (length(y) < 2 * max(period2)) {
     stop("Insufficient data to estimate model")
+  }
+  if (h < 1) {
+    stop("Forecast horizon out of bounds")
   }
 
   if (!armethod) {
