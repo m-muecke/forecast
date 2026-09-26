@@ -178,7 +178,7 @@ forecast.theta_model <- function(
 
   # Reseasonalize
   if (seasonal) {
-    seas_h <- rep(object$seas_component, trunc(1 + h / m))[seq_len(h)]
+    seas_h <- rep_len(object$seas_component, h)
     if (object$type == "multiplicative") {
       fcast$mean <- fcast$mean * seas_h
     } else {

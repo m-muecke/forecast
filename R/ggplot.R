@@ -1668,7 +1668,7 @@ ggseasonplot <- function(
       } else {
         p <- p +
           ggplot2::scale_color_manual(
-            values = rep(col, ceiling(ncol / length(col)))[1:ncol]
+            values = if (is.null(names(col))) rep_len(col, ncol) else col
           )
       }
     }

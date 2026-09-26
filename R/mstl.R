@@ -282,10 +282,7 @@ forecast.stl <- function(
     for (i in seq_len(nseasons)) {
       mp <- seasonal.periods[i]
       colname <- colnames(object)[seasoncolumns[i]]
-      seascomp[, i] <- rep(
-        object[n - rev(seq_len(mp)) + 1, colname],
-        trunc(1 + (h - 1) / mp)
-      )[seq_len(h)]
+      seascomp[, i] <- rep_len(object[n - rev(seq_len(mp)) + 1, colname], h)
     }
     lastseas <- rowSums(seascomp)
     xdata <- object[, "Data"]
@@ -295,9 +292,7 @@ forecast.stl <- function(
   } else if (inherits(object, "stl")) {
     m <- frequency(object$time.series)
     n <- NROW(object$time.series)
-    lastseas <- rep(seasonal(object)[n - (m:1) + 1], trunc(1 + (h - 1) / m))[
-      1:h
-    ]
+    lastseas <- rep_len(seasonal(object)[n - (m:1) + 1], h)
     xdata <- ts(rowSums(object$time.series))
     tsp(xdata) <- tsp(object$time.series)
     allseas <- seasonal(object)
@@ -620,10 +615,7 @@ forecast.stlm <- function(
   for (i in seq_along(seasonal.periods)) {
     mp <- seasonal.periods[i]
     colname <- paste0("Seasonal", round(mp, 2))
-    seascomp[, i] <- rep(
-      object$stl[n - rev(seq_len(mp)) + 1, colname],
-      trunc(1 + (h - 1) / mp)
-    )[seq_len(h)]
+    seascomp[, i] <- rep_len(object$stl[n - rev(seq_len(mp)) + 1, colname], h)
   }
   lastseas <- rowSums(seascomp)
   seascols <- grep("Seasonal", colnames(object$stl), fixed = TRUE)
