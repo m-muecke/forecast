@@ -62,11 +62,19 @@
 <li>
 <code><a href="../reference/auto.arima.html">auto.arima()</a></code> now truncates <code>xreg</code> together with the series when <code>approximation = TRUE</code> and <code>truncate</code> is set, so model selection no longer fails.</li>
 <li>
+<code><a href="../reference/auto.arima.html">auto.arima()</a></code> stepwise search now searches models without a constant when the null model without one is best.</li>
+<li>
 <code><a href="../reference/Arima.html">Arima()</a></code> no longer errors when the series is supplied via the deprecated <code>x</code> argument.</li>
 <li>
 <code><a href="https://ggplot2.tidyverse.org/reference/autolayer.html" class="external-link">autolayer()</a></code> now labels an unnamed <code>msts</code> series with the name of the object instead of “NULL”.</li>
 <li>
+<code><a href="https://ggplot2.tidyverse.org/reference/autolayer.html" class="external-link">autolayer()</a></code> for <code>mts</code> and <code>mforecast</code> objects no longer errors when arguments are local variables.</li>
+<li>
 <code><a href="../reference/plot.forecast.html">autoplot.forecast()</a></code> no longer errors for cross-sectional regression models fitted without an intercept.</li>
+<li>
+<code><a href="../reference/autoplot.acf.html">autoplot.mpacf()</a></code>, used by <code><a href="../reference/autoplot.acf.html">ggtaperedacf()</a></code>, no longer inverts the significance legend.</li>
+<li>
+<code><a href="../reference/plot.bats.html">autoplot.tbats()</a></code> no longer errors.</li>
 <li>
 <code><a href="../reference/bld.mbb.bootstrap.html">bld.mbb.bootstrap()</a></code> no longer errors when <code>num = 1</code> and now validates that <code>num</code> is a positive integer.</li>
 <li>
@@ -87,6 +95,14 @@
 <code><a href="../reference/forecast.ets.html">forecast.ets()</a></code> now gives the intended error message when forecasting fails for a multiplicative trend model.</li>
 <li>
 <code><a href="../reference/forecast.ts.html">forecast.ts()</a></code> now keeps the series name in more cases.</li>
+<li>
+<code>forecast.varest()</code> now supports <code>fan = TRUE</code> and <code>level</code> values between 0 and 1.</li>
+<li>
+<code><a href="../reference/geom_forecast.html">geom_forecast()</a></code> no longer errors for forecast objects when forecast is not attached.</li>
+<li>
+<code><a href="../reference/autoplot.acf.html">ggtaperedacf()</a></code> no longer errors when forecast is not attached.</li>
+<li>
+<code><a href="../reference/tsdisplay.html">ggtsdisplay()</a></code> shows the series name as the default title again.</li>
 <li>
 <code><a href="../reference/mstl.html">mstl()</a></code> now drops short seasonal periods from the <code>msts</code> attribute, so <code><a href="../reference/forecast.stl.html">forecast.stlm()</a></code> no longer errors.</li>
 <li>

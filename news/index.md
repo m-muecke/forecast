@@ -9,15 +9,27 @@
   now truncates `xreg` together with the series when
   `approximation = TRUE` and `truncate` is set, so model selection no
   longer fails.
+- [`auto.arima()`](https://pkg.robjhyndman.com/forecast/reference/auto.arima.md)
+  stepwise search now searches models without a constant when the null
+  model without one is best.
 - [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
   no longer errors when the series is supplied via the deprecated `x`
   argument.
 - [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
   now labels an unnamed `msts` series with the name of the object
   instead of “NULL”.
+- [`autolayer()`](https://ggplot2.tidyverse.org/reference/autolayer.html)
+  for `mts` and `mforecast` objects no longer errors when arguments are
+  local variables.
 - [`autoplot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer errors for cross-sectional regression models fitted without
   an intercept.
+- [`autoplot.mpacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md),
+  used by
+  [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md),
+  no longer inverts the significance legend.
+- [`autoplot.tbats()`](https://pkg.robjhyndman.com/forecast/reference/plot.bats.md)
+  no longer errors.
 - [`bld.mbb.bootstrap()`](https://pkg.robjhyndman.com/forecast/reference/bld.mbb.bootstrap.md)
   no longer errors when `num = 1` and now validates that `num` is a
   positive integer.
@@ -46,6 +58,14 @@
   multiplicative trend model.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
+- `forecast.varest()` now supports `fan = TRUE` and `level` values
+  between 0 and 1.
+- [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
+  no longer errors for forecast objects when forecast is not attached.
+- [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
+  no longer errors when forecast is not attached.
+- [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
+  shows the series name as the default title again.
 - [`mstl()`](https://pkg.robjhyndman.com/forecast/reference/mstl.md) now
   drops short seasonal periods from the `msts` attribute, so
   [`forecast.stlm()`](https://pkg.robjhyndman.com/forecast/reference/forecast.stl.md)
