@@ -93,11 +93,6 @@
   multiplicative trend model.
 - [`forecast.modelAR()`](https://pkg.robjhyndman.com/forecast/reference/forecast.modelAR.md)
   now computes prediction intervals for models with `xreg`.
-- [`forecast.theta_model()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
-  and
-  [`thetaf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.theta_model.md)
-  now return the residuals of the theta model instead of those of the
-  internal SES fit.
 - [`forecast.ts()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ts.md)
   now keeps the series name in more cases.
 - `forecast.varest()` now supports `fan = TRUE` and `level` values
