@@ -68,6 +68,10 @@
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
   instead of 0.
+- [`easter()`](https://pkg.robjhyndman.com/forecast/reference/easter.md)
+  now returns the correct fractions when Easter spans two months or
+  quarters and the series starts in April (or the second quarter) or
+  ends in March (or the first quarter).
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
   keeps the series name for short series.
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) no
@@ -78,6 +82,9 @@
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
 - [`forecast.StructTS()`](https://pkg.robjhyndman.com/forecast/reference/forecast.StructTS.md)
   now uses the series frequency for its default forecast horizon.
+- [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
+  now uses the damping parameter in forecasts and prediction intervals
+  for ETS(M,Ad,M) models.
 - [`forecast.ets()`](https://pkg.robjhyndman.com/forecast/reference/forecast.ets.md)
   now uses the supplied `innov` matrix when `simulate = TRUE` instead of
   silently ignoring it.
