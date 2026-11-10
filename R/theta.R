@@ -210,6 +210,7 @@ forecast.theta_model <- function(
   fcast$model <- object
   fcast$series <- object$series
   fcast$fitted <- object$fitted
+  fcast$residuals <- object$residuals
   fcast
 }
 

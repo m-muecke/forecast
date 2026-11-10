@@ -109,3 +109,17 @@ test_that("thetaf seasonal", {
   expect_length(fc$mean, 12)
   expect_equal(frequency(fc$mean), 12)
 })
+
+test_that("forecast.theta_model returns the model residuals", {
+  fits <- list(
+    theta_model(Nile),
+    theta_model(USAccDeaths),
+    theta_model(USAccDeaths, type = "additive"),
+    theta_model(AirPassengers, lambda = 0)
+  )
+  for (fit in fits) {
+    fc <- forecast(fit)
+    expect_identical(fc$residuals, fit$residuals)
+    expect_equal(fc$residuals, fc$x - fc$fitted)
+  }
+})

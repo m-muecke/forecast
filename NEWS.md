@@ -23,6 +23,7 @@
 * `forecast.ets()` now uses the supplied `innov` matrix when `simulate = TRUE` instead of silently ignoring it.
 * `forecast.ets()` now gives the intended error message when forecasting fails for a multiplicative trend model.
 * `forecast.modelAR()` now computes prediction intervals for models with `xreg`.
+* `forecast.theta_model()` and `thetaf()` now return the residuals of the theta model instead of those of the internal SES fit.
 * `forecast.ts()` now keeps the series name in more cases.
 * `forecast.varest()` now supports `fan = TRUE` and `level` values between 0 and 1.
 * `geom_forecast()` no longer errors for forecast objects when forecast is not attached.
