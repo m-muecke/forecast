@@ -16,6 +16,12 @@ test_that("rw_model rejects multivariate ts", {
   expect_error(rw_model(ts(matrix(1:10, ncol = 2))), "Multivariate")
 })
 
+test_that("rw_model requires more observations than lag", {
+  expect_snapshot(rw_model(ts(1:4, frequency = 4), lag = 4), error = TRUE)
+  expect_snapshot(snaive(ts(1:4, frequency = 4)), error = TRUE)
+  expect_no_error(rw_model(ts(1:5, frequency = 4), lag = 4))
+})
+
 test_that("forecast.rw_model works", {
   fit <- rw_model(gold)
   fc <- forecast(fit, h = 10)

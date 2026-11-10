@@ -61,6 +61,9 @@ rw_model <- function(
       "Multivariate time series detected. This function is designed for univariate time series only."
     )
   }
+  if (length(y) <= lag) {
+    stop("`y` must have more observations than `lag`.")
+  }
   origy <- y
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
