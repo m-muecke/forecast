@@ -34,6 +34,7 @@
 * `nsdiffs()` now ignores extra arguments passed via `...` with `test = "seas"` instead of silently returning 0.
 * `ocsb.test()` lag selection now considers lag 0 and returns the lag that minimises the criterion.
 * `print()` for `Arima()` models now displays the stored AICc and BIC values instead of recomputing them, which gave slightly different results for series with interior missing values.
+* `residuals.Arima()` with `type = "regression"` now looks up the regressors of `stats::arima()` models in the calling environment. It no longer errors when the regressor variable is named `xreg`, and no longer returns wrong values when the variable shares a name with one of its own arguments, such as `x` or `h`. It now gives an informative error when the regressors cannot be found.
 * `simulate.Arima()` now retains nonzero AR and MA coefficients that sum to zero in seasonal models.
 * `splinef()` and `thetaf()` now return the series name instead of "x".
 * `subset()` no longer ignores the `subset` argument for `msts` objects.

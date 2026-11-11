@@ -471,16 +471,21 @@ forecast.ar <- function(
 
 # Find xreg matrix in an Arima object
 
-getxreg <- function(z) {
+getxreg <- function(z, env = parent.frame()) {
   # Look in the obvious place first
   if ("xreg" %in% names(z)) {
     return(z$xreg)
-  } else if ("xreg" %in% names(z$coef)) {
-    # Next most obvious place
-    return(eval.parent(z$coef$xreg))
   } else if ("xreg" %in% names(z$call)) {
     # Now check under call
-    return(eval.parent(z$call$xreg))
+    tryCatch(
+      eval(z$call$xreg, env),
+      error = function(e) {
+        stop(
+          "Could not find the regressors used to fit this model.\n  Please use Arima() or auto.arima() rather than arima().",
+          call. = FALSE
+        )
+      }
+    )
   } else {
     # Otherwise check if it exists
     armapar <- sum(z$arma[1:4]) + "intercept" %in% names(z$coef)

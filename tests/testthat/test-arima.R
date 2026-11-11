@@ -24,6 +24,28 @@ test_that("tests for ARIMA errors", {
   expect_identical(residuals(fit, type = "regression"), wineind)
 })
 
+test_that("ARIMA errors use the caller's regressors for stats::arima() fits", {
+  xreg <- x <- rep(0:1, 50)
+  expected <- residuals(
+    Arima(WWWusage, order = c(1, 1, 0), xreg = xreg),
+    type = "regression"
+  )
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = xreg)
+  expect_equal(residuals(fit, type = "regression"), expected)
+  fit <- stats::arima(WWWusage, order = c(1, 1, 0), xreg = x)
+  expect_equal(residuals(fit, type = "regression"), expected)
+})
+
+test_that("ARIMA errors fail clearly when the regressors cannot be found", {
+  fit_arima <- function() {
+    z <- rep(0:1, 50)
+    stats::arima(WWWusage, order = c(1, 1, 0), xreg = z)
+  }
+  expect_snapshot(error = TRUE, {
+    residuals(fit_arima(), type = "regression")
+  })
+})
+
 test_that("tests for arimaorder", {
   for (ar in 0:2) {
     for (i in 0:1) {
