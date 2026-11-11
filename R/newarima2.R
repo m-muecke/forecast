@@ -1164,7 +1164,6 @@ myarima <- function(
   lastnonmiss <- tail(which(!missing), 1)
   n <- sum(!missing[firstnonmiss:lastnonmiss])
   m <- frequency(x)
-  use.season <- (sum(seasonal) > 0) && m > 0
   diffs <- order[2] + seasonal[2]
   if (is.null(method)) {
     if (approximation) {
@@ -1185,59 +1184,35 @@ myarima <- function(
         }
       ))
     )
-    if (use.season) {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            seasonal = list(order = seasonal, period = m),
-            xreg = xreg,
-            method = method,
-            ...
-          ),
-          silent = TRUE
-        )
+    # `include.mean` is left out here as it has no effect with differencing
+    suppressWarnings(
+      fit <- try(
+        stats::arima(
+          x = x,
+          order = order,
+          seasonal = list(order = seasonal, period = m),
+          xreg = xreg,
+          method = method,
+          ...
+        ),
+        silent = TRUE
       )
-    } else {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(x = x, order = order, xreg = xreg, method = method, ...),
-          silent = TRUE
-        )
-      )
-    }
+    )
   } else {
-    if (use.season) {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            seasonal = list(order = seasonal, period = m),
-            include.mean = constant,
-            method = method,
-            xreg = xreg,
-            ...
-          ),
-          silent = TRUE
-        )
+    suppressWarnings(
+      fit <- try(
+        stats::arima(
+          x = x,
+          order = order,
+          seasonal = list(order = seasonal, period = m),
+          xreg = xreg,
+          include.mean = constant,
+          method = method,
+          ...
+        ),
+        silent = TRUE
       )
-    } else {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            include.mean = constant,
-            method = method,
-            xreg = xreg,
-            ...
-          ),
-          silent = TRUE
-        )
-      )
-    }
+    )
   }
   if (!inherits(fit, "try-error")) {
     nstar <- n - order[2] - seasonal[2] * m
@@ -1319,7 +1294,7 @@ myarima <- function(
 
     if (trace) {
       cat("\n ARIMA(", order[1], ",", order[2], ",", order[3], ")", sep = "")
-      if (use.season) {
+      if (sum(seasonal) > 0) {
         cat(
           "(",
           seasonal[1],

@@ -758,30 +758,17 @@ Arima <- function(
         ))
       )
     }
-    if (is.null(xreg)) {
-      suppressWarnings(
-        tmp <- stats::arima(
-          x = x,
-          order = order,
-          seasonal = seasonal,
-          include.mean = include.mean,
-          method = method,
-          ...
-        )
+    suppressWarnings(
+      tmp <- stats::arima(
+        x = x,
+        order = order,
+        seasonal = seasonal,
+        xreg = xreg,
+        include.mean = include.mean,
+        method = method,
+        ...
       )
-    } else {
-      suppressWarnings(
-        tmp <- stats::arima(
-          x = x,
-          order = order,
-          seasonal = seasonal,
-          xreg = xreg,
-          include.mean = include.mean,
-          method = method,
-          ...
-        )
-      )
-    }
+    )
   }
 
   # Calculate aicc & bic based on tmp$aic
