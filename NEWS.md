@@ -7,6 +7,7 @@
 * `Arima()`, `holt()`, `hw()`, `modelAR()`, `nnetar()` and `thetaf()` no longer error when the series is supplied via the deprecated `x` argument.
 * `autolayer()` now labels an unnamed `msts` series with the name of the object instead of "NULL".
 * `autolayer()` for `mts` and `mforecast` objects no longer errors when arguments are local variables.
+* `autoplot.acf()` and `ggAcf()` no longer error for `type = "covariance"`, and covariance plots no longer show significance lines.
 * `autoplot.forecast()` no longer errors for cross-sectional regression models fitted without an intercept.
 * `autoplot.mpacf()`, used by `ggtaperedacf()`, no longer inverts the significance legend.
 * `autoplot.tbats()` no longer errors.

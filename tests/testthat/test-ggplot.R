@@ -88,6 +88,16 @@ test_that("tests for autoplot/gg functions", {
   gghistogram(USAccDeaths, add.kde = TRUE)
 })
 
+test_that("autoplot.acf() handles autocovariances", {
+  p <- ggAcf(wineind, type = "covariance")
+  expect_s3_class(p, "ggplot")
+  expect_identical(ggplot2::get_labs(p)$y, "ACF (cov)")
+  # No significance lines, which only apply to correlations
+  expect_length(p$layers, 2)
+  expect_length(ggCcf(mdeaths, fdeaths, type = "covariance")$layers, 2)
+  expect_length(ggAcf(wineind)$layers, 3)
+})
+
 test_that("autoplot.seas() works", {
   skip_if_not_installed("seasonal")
   expect_s3_class(autoplot(seasonal::seas(USAccDeaths)), "ggplot")

@@ -159,14 +159,16 @@ autoplot.acf <- function(object, ci = 0.95, ...) {
   # Add data
   p <- p + ggplot2::geom_segment(lineend = "butt", ...)
 
-  # Add ci lines (assuming white noise input)
-  ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
-  p <- p +
-    ggplot2::geom_hline(
-      yintercept = c(-ci, ci),
-      colour = "blue",
-      linetype = "dashed"
-    )
+  # Add ci lines (assuming white noise input), which only apply to correlations
+  if (object$type != "covariance") {
+    ci <- qnorm((1 + ci) / 2) / sqrt(object$n.used)
+    p <- p +
+      ggplot2::geom_hline(
+        yintercept = c(-ci, ci),
+        colour = "blue",
+        linetype = "dashed"
+      )
+  }
 
   # Add facets if needed
   if (any(dim(object$acf)[2:3] != c(1, 1))) {
@@ -182,18 +184,16 @@ autoplot.acf <- function(object, ci = 0.95, ...) {
     ticktype <- "ccf"
     main <- paste("Series:", object$snames)
     nlags <- round(dim(object$lag)[1] / 2)
-  } else if (object$type == "partial") {
-    ylab <- "PACF"
-    ticktype <- "acf"
-    main <- paste("Series:", object$series)
-    nlags <- dim(object$lag)[1]
-  } else if (object$type == "correlation") {
-    ylab <- "ACF"
-    ticktype <- "acf"
-    main <- paste("Series:", object$series)
-    nlags <- dim(object$lag)[1]
   } else {
-    ylab <- NULL
+    ylab <- switch(
+      object$type,
+      partial = "PACF",
+      correlation = "ACF",
+      covariance = "ACF (cov)"
+    )
+    ticktype <- "acf"
+    main <- paste("Series:", object$series)
+    nlags <- dim(object$lag)[1]
   }
 
   # Add seasonal x-axis
