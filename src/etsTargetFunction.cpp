@@ -100,15 +100,9 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   // Check states
   if (seasontype == 2) {
-    double min = R_PosInf;
-    int start = 1;
-    if (trendtype != 0) start = 2;
+    const auto seasonal = state.begin() + ((trendtype != 0) ? 2 : 1);
 
-    for (int i = start; i < state.size(); i++) {
-      min = std::min(min, state[i]);
-    }
-
-    if (min < 0) {
+    if (std::any_of(seasonal, state.end(), [](double s) { return s < 0; })) {
       this->objval = R_PosInf;
       return;
     }
