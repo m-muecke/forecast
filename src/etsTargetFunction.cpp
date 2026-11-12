@@ -85,11 +85,14 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   this->state.assign(par.end() - nstate, par.end());
 
+  // Seasonal states follow the level and, if present, the trend
+  const int first_seasonal = (trendtype != 0) ? 2 : 1;
+
   // Add extra state
   if (seasontype != 0) {
     double sum = 0;
 
-    for (int i = (1 + ((trendtype != 0) ? 1 : 0)); i < nstate; i++) {
+    for (int i = first_seasonal; i < nstate; i++) {
       sum += state[i];
     }
 
@@ -100,9 +103,7 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
 
   // Check states
   if (seasontype == 2) {
-    const auto seasonal = state.begin() + ((trendtype != 0) ? 2 : 1);
-
-    if (std::any_of(seasonal, state.end(), [](double s) { return s < 0; })) {
+    if (std::any_of(state.begin() + first_seasonal, state.end(), [](double s) { return s < 0; })) {
       this->objval = R_PosInf;
       return;
     }
