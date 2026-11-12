@@ -136,16 +136,16 @@ void EtsTargetFunction::eval(const double *p_par, int p_par_length) {
   } else if (this->opt_crit == "sigma") {
     double mean = 0;
     const int ne = e.size();
-    for (int i = 0; i < ne; i++) {
-      mean += e[i] * e[i] / ne;
+    for (const double ei : e) {
+      mean += ei * ei / ne;
     }
     this->objval = mean;
 
   } else if (this->opt_crit == "mae") {
     double mean = 0;
     const int ne = e.size();
-    for (int i = 0; i < ne; i++) {
-      mean += std::fabs(e[i]) / ne;
+    for (const double ei : e) {
+      mean += std::fabs(ei) / ne;
     }
     this->objval = mean;
   }
@@ -190,7 +190,7 @@ bool EtsTargetFunction::admissible() {
 
     // max(1-1/phi-alpha,0)
     const double d = 1 - 1 / phi - alpha;
-    if (gamma < ((d > 0) ? d : 0) || gamma > 1 + 1 / phi - alpha)
+    if (gamma < std::max(0.0, d) || gamma > 1 + 1 / phi - alpha)
       return false;
 
     if (alpha < 1 - 1 / phi - gamma * (1 - m + phi + phi * m) / (2 * phi * m))
@@ -217,7 +217,7 @@ bool EtsTargetFunction::admissible() {
     std::vector<double> zeror(degree);
     std::vector<double> zeroi(degree);
 
-    bool fail;
+    bool fail = false;
 
     R_cpolyroot(opr.data(), opi.data(), &degree, zeror.data(), zeroi.data(),
                 &fail);
