@@ -149,6 +149,11 @@ test_that("tests for forecast.Arima", {
   expect_false(identical(fit1$coef, fit6$coef))
 })
 
+test_that("forecast.Arima() warns once about unknown arguments", {
+  fit <- Arima(lh, order = c(1, 0, 0))
+  expect_snapshot(fc <- forecast(fit, h = 2, foo = 1, bar = 2))
+})
+
 test_that("tests for search.arima", {
   set.seed(444)
   arimasim <- arima.sim(
