@@ -20,7 +20,8 @@ simulate.tbats <- function(
   }
   if (bootstrap) {
     res <- residuals(object)
-    res <- na.omit(res - mean(res, na.rm = TRUE))
+    res <- res - mean(res, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     e <- rnorm(nsim, 0, sqrt(object$variance))

@@ -380,7 +380,8 @@ simulate.spline_model <- function(
   }
 
   if (bootstrap) {
-    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
+    res <- c(object$residuals) - mean(object$residuals, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     se <- sqrt(object$sigma2)

@@ -20,6 +20,14 @@ test_that("meanf() works with lambda = \"auto\"", {
   expect_equal(fc$mean, forecast(fit, h = 5)$mean)
 })
 
+test_that("meanf() bootstraps with internal missing values", {
+  x <- wineind
+  x[10] <- NA
+  fc <- meanf(x, h = 2, bootstrap = TRUE, npaths = 100)
+  expect_identical(dim(fc$lower), c(2L, 2L))
+  expect_all_true(!is.na(c(fc$lower, fc$upper)))
+})
+
 test_that("test mean_model", {
   meanmod <- mean_model(wineind)
   f1 <- forecast(meanmod)

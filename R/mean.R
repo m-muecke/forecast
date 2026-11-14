@@ -112,7 +112,7 @@ forecast.mean_model <- function(
   nconf <- length(level)
   if (bootstrap) {
     res <- object$residuals
-    e <- na.omit(res) - mean(res, na.rm = TRUE)
+    e <- res[!is.na(res)] - mean(res, na.rm = TRUE)
     sim <- matrix(
       sample(e, size = npaths * h, replace = TRUE),
       ncol = npaths,

@@ -89,7 +89,7 @@ subset.ts <- function(
     } else {
       season <- month
     }
-    season <- na.omit(season)
+    season <- season[!is.na(season)]
     if (length(season) == 0L) {
       stop("No recognizable months")
     }
@@ -105,7 +105,7 @@ subset.ts <- function(
     } else {
       season <- quarter
     }
-    season <- na.omit(season)
+    season <- season[!is.na(season)]
     if (length(season) == 0L) {
       stop("No recognizable quarters")
     }

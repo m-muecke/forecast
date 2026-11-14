@@ -423,7 +423,8 @@ forecast.lm <- function(
 
   # Remove missing values from residuals
   predict_object <- object
-  predict_object$residuals <- na.omit(as.numeric(object$residuals))
+  res <- as.numeric(object$residuals)
+  predict_object$residuals <- res[!is.na(res)]
 
   nl <- length(level)
   out <- vector("list", nl)

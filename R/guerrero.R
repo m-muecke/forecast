@@ -44,7 +44,7 @@ bcloglik <- function(x, lower = -1, upper = 2) {
   if (any(x <= 0, na.rm = TRUE)) {
     stop("x must be positive")
   }
-  logx <- log(na.omit(c(x)))
+  logx <- log(x[!is.na(x)])
   xdot <- exp(mean(logx))
   if (!is.ts(x)) {
     fit <- lm(
@@ -64,7 +64,7 @@ bcloglik <- function(x, lower = -1, upper = 2) {
   lambda <- seq(lower, upper, by = .05)
   xl <- loglik <- as.vector(lambda)
   m <- length(xl)
-  x <- na.omit(c(x))
+  x <- x[!is.na(x)]
   for (i in seq_len(m)) {
     if (abs(la <- xl[i]) > 0.02) {
       xt <- (x^la - 1) / la

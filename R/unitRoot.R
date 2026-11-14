@@ -58,7 +58,8 @@ ndiffs <- function(
 ) {
   test <- match.arg(test)
   type <- match(match.arg(type), c("level", "trend"))
-  x <- c(na.omit(c(x)))
+  x <- c(x)
+  x <- x[!is.na(x)]
   d <- 0
 
   if (alpha < 0.01) {

@@ -81,7 +81,8 @@ simulate.ets <- function(
   }
 
   if (bootstrap) {
-    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
+    res <- c(object$residuals) - mean(object$residuals, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     e <- rnorm(nsim, 0, sqrt(object$sigma2))
@@ -449,7 +450,8 @@ simulate.Arima <- function(
   }
 
   if (bootstrap) {
-    res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm = TRUE))
+    res <- c(model$residuals) - mean(model$residuals, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     e <- rnorm(nsim, 0, model$sd)
@@ -562,7 +564,8 @@ simulate.ar <- function(
     )
   }
   if (bootstrap) {
-    res <- na.omit(c(model$residuals) - mean(model$residuals, na.rm = TRUE))
+    res <- c(model$residuals) - mean(model$residuals, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     e <- rnorm(nsim, 0, model$sd)
@@ -601,7 +604,8 @@ simulate.rw_model <- function(
   }
 
   if (bootstrap) {
-    res <- na.omit(c(object$residuals) - mean(object$residuals, na.rm = TRUE))
+    res <- c(object$residuals) - mean(object$residuals, na.rm = TRUE)
+    res <- res[!is.na(res)]
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
     se <- sqrt(object$sigma2)
@@ -763,7 +767,8 @@ simulate.nnetar <- function(
   }
   ## set simulation innovations
   if (bootstrap) {
-    res <- na.omit(c(residuals(object, type = "innovation")))
+    res <- c(residuals(object, type = "innovation"))
+    res <- res[!is.na(res)]
     res <- res - mean(res)
     ## scale if appropriate
     if (!is.null(object$scalex$scale)) {
@@ -771,7 +776,8 @@ simulate.nnetar <- function(
     }
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
-    res <- na.omit(c(residuals(object, type = "innovation")))
+    res <- c(residuals(object, type = "innovation"))
+    res <- res[!is.na(res)]
     ## scale if appropriate
     if (!is.null(object$scalex$scale)) {
       res <- res / object$scalex$scale
@@ -886,7 +892,8 @@ simulate.modelAR <- function(
   }
   ## set simulation innovations
   if (bootstrap) {
-    res <- na.omit(c(residuals(object, type = "innovation")))
+    res <- c(residuals(object, type = "innovation"))
+    res <- res[!is.na(res)]
     res <- res - mean(res)
     ## scale if appropriate
     if (!is.null(object$scalex$scale)) {
@@ -894,7 +901,8 @@ simulate.modelAR <- function(
     }
     e <- sample(res, nsim, replace = TRUE)
   } else if (is.null(innov)) {
-    res <- na.omit(c(residuals(object, type = "innovation")))
+    res <- c(residuals(object, type = "innovation"))
+    res <- res[!is.na(res)]
     ## scale if appropriate
     if (!is.null(object$scalex$scale)) {
       res <- res / object$scalex$scale

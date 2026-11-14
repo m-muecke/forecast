@@ -624,7 +624,7 @@ etsmodel <- function(
   names(alpha) <- names(beta) <- names(gamma) <- names(phi) <- NULL
   par.noopt <- c(alpha = alpha, beta = beta, gamma = gamma, phi = phi)
   if (!is.null(par.noopt)) {
-    par.noopt <- c(na.omit(par.noopt))
+    par.noopt <- par.noopt[!is.na(par.noopt)]
   }
   if (!is.na(par["alpha"])) {
     alpha <- par["alpha"]
