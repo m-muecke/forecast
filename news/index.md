@@ -69,6 +69,10 @@
   [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
   no longer leave a `lambda` attribute on the seed states, which was
   printed with models that use a Box-Cox transformation.
+- [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md) and
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  no longer error with `use.parallel = TRUE` when only one combination
+  of Box-Cox, trend and damping options is left to fit.
 - [`bizdays()`](https://pkg.robjhyndman.com/forecast/reference/bizdays.md)
   now gives an informative error when the series is not monthly or
   quarterly.
@@ -105,10 +109,17 @@
 - [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) no
   longer treats parameters as admissible when the polynomial root search
   fails.
+- [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) now
+  uses the same degrees of freedom for `sigma2` as the original fit when
+  refitting with `use.initial.values = TRUE`.
 - [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
   methods now always sort prediction intervals by increasing `level`, so
   [`plot.forecast()`](https://pkg.robjhyndman.com/forecast/reference/plot.forecast.md)
   no longer swaps the shading when `level` is supplied out of order.
+- [`forecast()`](https://generics.r-lib.org/reference/forecast.html)
+  methods no longer warn that `biasadj` information was not found when
+  `lambda` is supplied without `biasadj`. They now consistently use the
+  `biasadj` setting stored with `lambda`, or `FALSE` if there is none.
 - [`forecast.Arima()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md)
   now correctly passes `xreg` when `bootstrap = TRUE`
   ([\#1115](https://github.com/robjhyndman/forecast/issues/1115)).
@@ -168,6 +179,9 @@
   between 0 and 1.
 - [`geom_forecast()`](https://pkg.robjhyndman.com/forecast/reference/geom_forecast.md)
   no longer errors for forecast objects when forecast is not attached.
+- [`getResponse()`](https://pkg.robjhyndman.com/forecast/reference/getResponse.md)
+  now returns the original series for `StructTS` models instead of its
+  time series attributes.
 - [`gglagchull()`](https://pkg.robjhyndman.com/forecast/reference/gglagplot.md)
   now labels an unnamed series with the name of the object instead of
   its deparsed values.
