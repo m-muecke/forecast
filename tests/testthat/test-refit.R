@@ -137,3 +137,38 @@ test_that("tests for re-fitting models", {
   expect_identical(fit$fitted, refit_same$fitted)
   expect_identical(residuals(fit), residuals(refit_same))
 })
+
+test_that("refitting reuses lambda and biasadj from the model", {
+  fit <- arfima(WWWusage, lambda = 0.75, biasadj = TRUE)
+  refit <- arfima(WWWusage, model = fit)
+  expect_identical(refit$lambda, fit$lambda)
+  expect_equal(fitted(refit), fitted(fit))
+
+  fit <- ets(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- ets(AirPassengers, model = fit, use.initial.values = TRUE)
+  expect_identical(refit$lambda, fit$lambda)
+
+  fit <- stlm(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- stlm(AirPassengers, model = fit)
+  expect_identical(refit$lambda, fit$lambda)
+  expect_equal(fitted(refit), fitted(fit))
+})
+
+test_that("refitting keeps an explicit biasadj", {
+  fit <- ets(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- ets(
+    AirPassengers,
+    model = fit,
+    biasadj = FALSE,
+    use.initial.values = TRUE
+  )
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+
+  fit <- stlm(AirPassengers, lambda = 0, biasadj = TRUE)
+  refit <- stlm(AirPassengers, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+
+  fit <- arfima(WWWusage, lambda = 0.75, biasadj = TRUE)
+  refit <- arfima(WWWusage, model = fit, biasadj = FALSE)
+  expect_identical(attr(refit$lambda, "biasadj"), FALSE)
+})

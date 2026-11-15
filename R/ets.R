@@ -130,6 +130,9 @@ ets <- function(
   orig.y <- y
   if (inherits(model, "ets") && is.null(lambda)) {
     lambda <- model$lambda
+    if (missing(biasadj)) {
+      biasadj <- attr(lambda, "biasadj") %||% FALSE
+    }
   }
   if (!is.null(lambda)) {
     y <- BoxCox(y, lambda)
