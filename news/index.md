@@ -22,6 +22,23 @@
   now keep the series name when it is supplied via the deprecated `x`
   argument.
 - [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md),
+  [`bats()`](https://pkg.robjhyndman.com/forecast/reference/bats.md),
+  [`dshw()`](https://pkg.robjhyndman.com/forecast/reference/dshw.md),
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md),
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) and
+  [`tbats()`](https://pkg.robjhyndman.com/forecast/reference/tbats.md)
+  now reuse the Box-Cox transformation and bias adjustment of `model`
+  when refitting, unless `lambda` or `biasadj` is supplied. If `biasadj`
+  is not supplied,
+  [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
+  [`dshw()`](https://pkg.robjhyndman.com/forecast/reference/dshw.md),
+  [`ets()`](https://pkg.robjhyndman.com/forecast/reference/ets.md) and
+  [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md) now
+  use the setting stored with `lambda`, as
+  [`Arima()`](https://pkg.robjhyndman.com/forecast/reference/Arima.md)
+  already did.
+- [`arfima()`](https://pkg.robjhyndman.com/forecast/reference/arfima.md),
   [`stlm()`](https://pkg.robjhyndman.com/forecast/reference/stlm.md),
   [`theta_model()`](https://pkg.robjhyndman.com/forecast/reference/theta_model.md)
   and [`tslm()`](https://pkg.robjhyndman.com/forecast/reference/tslm.md)
@@ -217,6 +234,10 @@
   models now displays the stored AICc and BIC values instead of
   recomputing them, which gave slightly different results for series
   with interior missing values.
+- [`residuals.Arima()`](https://pkg.robjhyndman.com/forecast/reference/residuals.forecast.md)
+  with `type = "regression"` now finds the regressors of
+  [`stats::arima()`](https://rdrr.io/r/stats/arima.html) models in the
+  calling environment, including data frames.
 - [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   now retains nonzero AR and MA coefficients that sum to zero in
   seasonal models.
