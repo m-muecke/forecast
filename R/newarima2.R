@@ -400,23 +400,16 @@ auto.arima <- function(
         }
       }
     }
-    if (D == 0) {
-      fit <- try(
-        stats::arima(x, order = c(0, d, 0), xreg = xreg, ...),
-        silent = TRUE
-      )
-    } else {
-      fit <- try(
-        stats::arima(
-          x,
-          order = c(0, d, 0),
-          seasonal = list(order = c(0, D, 0), period = m),
-          xreg = xreg,
-          ...
-        ),
-        silent = TRUE
-      )
-    }
+    fit <- try(
+      stats::arima(
+        x,
+        order = c(0, d, 0),
+        seasonal = list(order = c(0, D, 0), period = m),
+        xreg = xreg,
+        ...
+      ),
+      silent = TRUE
+    )
     if (!inherits(fit, "try-error")) {
       offset <- -2 * fit$loglik - serieslength * log(fit$sigma2)
     } else {
@@ -695,60 +688,23 @@ myarima <- function(
         }
       ))
     )
-    if (use.season) {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            seasonal = list(order = seasonal, period = m),
-            xreg = xreg,
-            method = method,
-            ...
-          ),
-          silent = TRUE
-        )
-      )
-    } else {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(x = x, order = order, xreg = xreg, method = method, ...),
-          silent = TRUE
-        )
-      )
-    }
-  } else {
-    if (use.season) {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            seasonal = list(order = seasonal, period = m),
-            include.mean = constant,
-            method = method,
-            xreg = xreg,
-            ...
-          ),
-          silent = TRUE
-        )
-      )
-    } else {
-      suppressWarnings(
-        fit <- try(
-          stats::arima(
-            x = x,
-            order = order,
-            include.mean = constant,
-            method = method,
-            xreg = xreg,
-            ...
-          ),
-          silent = TRUE
-        )
-      )
-    }
   }
+  # `include.mean` is ignored by stats::arima() for differenced models, and a
+  # period of `m` is what it uses for a non-seasonal model
+  suppressWarnings(
+    fit <- try(
+      stats::arima(
+        x = x,
+        order = order,
+        seasonal = list(order = seasonal, period = m),
+        xreg = xreg,
+        include.mean = constant,
+        method = method,
+        ...
+      ),
+      silent = TRUE
+    )
+  )
   if (!inherits(fit, "try-error")) {
     nstar <- n - order[2] - seasonal[2] * m
     if (diffs == 1 && constant) {
