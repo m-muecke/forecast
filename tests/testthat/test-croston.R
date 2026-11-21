@@ -110,6 +110,19 @@ test_that("croston_model with mae optimization", {
   )
 })
 
+test_that("croston_model keeps optimized parameters within bounds", {
+  fit <- croston_model(
+    c(y, 0, 0),
+    alpha = c(0.05, 0.05),
+    opt_alpha = TRUE,
+    opt_crit = "mae",
+    init = "mean"
+  )
+  expect_gte(min(fit$alpha), 0)
+  expect_gte(fit$init_demand, 0)
+  expect_gte(forecast(fit, h = 1)$mean[1], 0)
+})
+
 test_that("croston_model type variants", {
   fit_cr <- croston_model(y, type = "croston")
   fit_sba <- croston_model(y, type = "sba")

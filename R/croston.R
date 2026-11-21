@@ -138,7 +138,8 @@ croston_model <- function(
       method = "L-BFGS-B",
       control = list(maxit = 2000)
     )
-    par <- opt$par
+    # L-BFGS-B can return values marginally outside the bounds
+    par <- pmin(pmax(opt$par, lower), upper)
     alpha <- par[seq_len(n_alpha)]
     alpha_demand <- alpha[1]
     alpha_interval <- alpha[n_alpha]
