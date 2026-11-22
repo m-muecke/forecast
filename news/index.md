@@ -122,6 +122,10 @@
   [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
   can now optimize and separately specify Croston smoothing parameters.
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
+  and
+  [`croston()`](https://pkg.robjhyndman.com/forecast/reference/forecast.croston_model.md)
+  now give an informative error when the series contains missing values.
+- [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
   now returns `NA` for fitted values before the first non-zero demand
   instead of 0.
 - [`croston_model()`](https://pkg.robjhyndman.com/forecast/reference/croston_model.md)
@@ -227,10 +231,18 @@
 - [`gglagchull()`](https://pkg.robjhyndman.com/forecast/reference/gglagplot.md)
   now labels an unnamed series with the name of the object instead of
   its deparsed values.
+- [`ggsubseriesplot()`](https://pkg.robjhyndman.com/forecast/reference/ggmonthplot.md)
+  now draws the mean line for seasons that contain missing values.
 - [`ggtaperedacf()`](https://pkg.robjhyndman.com/forecast/reference/autoplot.acf.md)
   no longer errors when forecast is not attached.
 - [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
+  now uses `na.action` for the spectrum, so `plot.type = "spectrum"` no
+  longer errors for series with missing values.
+- [`ggtsdisplay()`](https://pkg.robjhyndman.com/forecast/reference/tsdisplay.md)
   shows the series name as the default title again.
+- [`InvBoxCox()`](https://pkg.robjhyndman.com/forecast/reference/BoxCox.md)
+  no longer leaves stray names or attributes on single-value results,
+  such as forecasts with `h = 1` and a Box-Cox transformation.
 - [`mean_model()`](https://pkg.robjhyndman.com/forecast/reference/mean_model.md)
   and
   [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
@@ -240,6 +252,9 @@
   level is supplied.
 - [`meanf()`](https://pkg.robjhyndman.com/forecast/reference/forecast.mean_model.md)
   no longer errors when `lambda = "auto"`.
+- [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md)
+  now keeps the method name when refitting with `model` instead of
+  replacing the function name with its source code.
 - [`modelAR()`](https://pkg.robjhyndman.com/forecast/reference/modelAR.md)
   with `scale.inputs = TRUE` now returns unscaled residuals, fixing
   too-narrow prediction intervals when `lambda` is set.
@@ -268,6 +283,11 @@
   with `type = "regression"` now finds the regressors of
   [`stats::arima()`](https://rdrr.io/r/stats/arima.html) models in the
   calling environment, including data frames.
+- [`simulate.ar()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
+  now uses the intercept of models fitted with `ar(method = "ols")`,
+  which also corrects simulated and bootstrapped prediction intervals
+  from
+  [`forecast.ar()`](https://pkg.robjhyndman.com/forecast/reference/forecast.Arima.md).
 - [`simulate.Arima()`](https://pkg.robjhyndman.com/forecast/reference/simulate.ets.md)
   now retains nonzero AR and MA coefficients that sum to zero in
   seasonal models.
