@@ -36,15 +36,21 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
   double oldl, l, oldb = 0.0, b = 0.0, olds[MAX_PERIOD], s[MAX_PERIOD],
       f[MAX_NMSE], lik2, tmp, denom[MAX_NMSE];
 
+  if (nmse > MAX_NMSE)
+    nmse = MAX_NMSE;
+
   if (m > MAX_PERIOD && season > NONE) {
+    for (int i = 0; i < n; i++) {
+      e[i] = NA_REAL;
+      fits[i] = NA_REAL;
+    }
+    for (int j = 0; j < nmse; j++)
+      amse[j] = NA_REAL;
     *lik = NA_REAL;
     return;
   }
   if (m < 1)
     m = 1;
-
-  if (nmse > MAX_NMSE)
-    nmse = MAX_NMSE;
 
   const int nstates = m * (season > NONE) + 1 + (trend > NONE);
 
@@ -75,6 +81,10 @@ void etscalc_internal(const double *y, int n, const double *x_init, double *stat
     forecast(oldl, oldb, olds, m, trend, season, phi, f, nmse);
     fits[i] = f[0];
     if (R_IsNA(fits[i])) {
+      for (int k = i; k < n; k++) {
+        e[k] = NA_REAL;
+        fits[k] = NA_REAL;
+      }
       *lik = NA_REAL;
       return;
     }

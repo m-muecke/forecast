@@ -62,6 +62,16 @@ test_that("ets() refit with initial values keeps sigma2", {
   expect_equal(refit$sigma2, fit$sigma2)
 })
 
+test_that("ets() refit returns NA after a failed multiplicative trend forecast", {
+  fit <- ets(ts(50 + 1:60), model = "AMN", restrict = FALSE)
+  fit$par[c("alpha", "beta")] <- 0.9
+  fit$initstate <- c(l = 50, b = 1)
+  y <- ts(c(50, 40, 20, 5, -10, -30, -60, -100, -150, -200))
+  refit <- ets(y, model = fit, use.initial.values = TRUE)
+  expect_identical(which(is.na(refit$fitted)), 6:10)
+  expect_identical(which(is.na(refit$residuals)), 6:10)
+})
+
 test_that("ets() refit keeps the bias adjustment of the model", {
   fit <- ets(AirPassengers, lambda = 0, biasadj = TRUE)
   refit <- ets(AirPassengers, model = fit, use.initial.values = TRUE)
