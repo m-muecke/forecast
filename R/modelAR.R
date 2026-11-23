@@ -156,9 +156,7 @@ modelAR <- function(
     } else {
       lags <- seq_len(p)
     }
-    if (!is.null(model$scalex)) {
-      scale.inputs <- TRUE
-    }
+    scale.inputs <- !is.null(model$scalex)
   } else {
     # when not using an old model
     if (length(y) < 3) {

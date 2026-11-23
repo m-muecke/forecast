@@ -268,3 +268,11 @@ test_that("nnetar() works with deprecated x argument", {
 test_that("nnetar() checks the class of model", {
   expect_snapshot(nnetar(lh, model = ets(lh)), error = TRUE)
 })
+test_that("nnetar() retains scaling when reusing fitted network weights", {
+  set.seed(42)
+  fit <- nnetar(Nile, p = 1, repeats = 1, scale.inputs = TRUE)
+  refit <- nnetar(Nile, model = fit, scale.inputs = FALSE)
+
+  expect_equal(fitted(refit), fitted(fit))
+  expect_equal(forecast(refit, h = 3)$mean, forecast(fit, h = 3)$mean)
+})

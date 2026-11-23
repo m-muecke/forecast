@@ -502,3 +502,20 @@ test_that("modelAR() keeps the method name when refitting", {
 test_that("modelAR() checks the class of model", {
   expect_snapshot(modelAR(lh, model = ets(lh)), error = TRUE)
 })
+test_that("modelAR() retains the preprocessing of an unscaled model", {
+  fit <- modelAR(
+    Nile,
+    p = 1,
+    FUN = lsfit,
+    predict.FUN = function(model, newdata = NULL) {
+      if (is.null(newdata)) {
+        return(Nile[-1] - model$residuals)
+      }
+      drop(cbind(1, newdata) %*% model$coefficients)
+    }
+  )
+  refit <- modelAR(Nile, model = fit, scale.inputs = TRUE)
+
+  expect_null(refit$scalex)
+  expect_equal(fitted(refit), fitted(fit))
+})
